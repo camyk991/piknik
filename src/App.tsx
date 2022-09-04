@@ -6,17 +6,21 @@ import Room from "./components/Room/Room";
 import Test1 from "./components/Test1/Test1";
 import Test2 from "./components/Test2/Test2";
 import { GlobalStyle } from "./GlobalStyles";
+import Main from "./components/Room/Main";
 
 const App = () => (
   <div className="App">
-    <Nav />
+    {/* <Nav />
 
     <Routes>
       <Route path="/" element={<Home />}></Route>
       <Route path="/test1" element={<Test1 />}></Route>
       <Route path="/test2" element={<Test2 />}></Route>
       <Route path="/test3" element={<Room />}></Route>
-    </Routes>
+    </Routes> */}
+
+    {/* <Room /> */}
+    <Main />
 
     <GlobalStyle />
   </div>

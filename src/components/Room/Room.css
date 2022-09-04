@@ -257,6 +257,10 @@
     display: none;
   }
 
+  #members__container {
+    margin-top: 45px;
+  }
+
   #members__button {
     display: block;
   }

@@ -1,49 +1,64 @@
-import express from 'express';
-import React from 'react';
-import { renderToString } from 'react-dom/server';
-import { StaticRouter } from 'react-router-dom/server';
-import { ServerStyleSheet } from 'styled-components';
+import express from "express";
+import React from "react";
+import { renderToString } from "react-dom/server";
+import { StaticRouter } from "react-router-dom/server";
+import { ServerStyleSheet } from "styled-components";
 
-import App from '../App';
-import connectDB from './config/db';
+import App from "../App";
+import connectDB from "./config/db";
 
 let assets: any;
 
-connectDB();
+// connectDB();
 
 const syncLoadAssets = () => {
   assets = require(process.env.RAZZLE_ASSETS_MANIFEST!);
 };
 syncLoadAssets();
 
-const cssLinksFromAssets = (assets: { [x: string]: { css: any[]; }; }, entrypoint: string) => {
-  return assets[entrypoint] ? assets[entrypoint].css ?
-  assets[entrypoint].css.map((asset: any)=>
-    `<link rel="stylesheet" href="${asset}">`
-  ).join('') : '' : '';
+const cssLinksFromAssets = (
+  assets: { [x: string]: { css: any[] } },
+  entrypoint: string
+) => {
+  return assets[entrypoint]
+    ? assets[entrypoint].css
+      ? assets[entrypoint].css
+          .map((asset: any) => `<link rel="stylesheet" href="${asset}">`)
+          .join("")
+      : ""
+    : "";
 };
 
-const jsScriptTagsFromAssets = (assets: { [x: string]: { js: any[]; }; }, entrypoint: string, extra = '') => {
-  return assets[entrypoint] ? assets[entrypoint].js ?
-  assets[entrypoint].js.map((asset: any)=>
-    `<script src="${asset}"${extra}></script>`
-  ).join('') : '' : '';
+const jsScriptTagsFromAssets = (
+  assets: { [x: string]: { js: any[] } },
+  entrypoint: string,
+  extra = ""
+) => {
+  return assets[entrypoint]
+    ? assets[entrypoint].js
+      ? assets[entrypoint].js
+          .map((asset: any) => `<script src="${asset}"${extra}></script>`)
+          .join("")
+      : ""
+    : "";
 };
 
 export const renderApp = (req: express.Request, res: express.Response) => {
   // This class is used for getting styles form styled_components and rendering it on server side
   const sheet = new ServerStyleSheet();
-  
-  const markup = renderToString(sheet.collectStyles(
-    <StaticRouter location={req.url}>
-      <App />
-    </StaticRouter>
-  ));
+
+  const markup = renderToString(
+    sheet.collectStyles(
+      <StaticRouter location={req.url}>
+        <App />
+      </StaticRouter>
+    )
+  );
 
   const styleTags = sheet.getStyleTags();
   const html =
-  // prettier-ignore
-  `<!doctype html>
+    // prettier-ignore
+    `<!doctype html>
   <html lang="">
   <head>
       <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -73,14 +88,14 @@ export const renderApp = (req: express.Request, res: express.Response) => {
   </body>
   </html>`;
 
-    return { html };
-  }
+  return { html };
+};
 
 const server = express()
-  .disable('x-powered-by')
+  .disable("x-powered-by")
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR!))
-  .get('/*', (req: express.Request, res: express.Response) => {
-    const { html = ''} = renderApp(req, res);
+  .get("/*", (req: express.Request, res: express.Response) => {
+    const { html = "" } = renderApp(req, res);
     res.send(html);
-  })
+  });
 export default server;
