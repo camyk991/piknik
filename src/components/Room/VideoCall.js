@@ -7,6 +7,20 @@ import {
 } from "./settings.js";
 import Room from "./Room.js";
 
+import uuid from "react-uuid";
+
+{
+  /* <li key={uuid()}> */
+}
+
+// let uid = sessionStorage.getItem("uid");
+// if (!uid) {
+//   uid = uuid();
+//   sessionStorage.setItem("uid", uid);
+// }
+
+// console.log(`Random uuid ${uid}`);
+
 export default function VideoCall(props) {
   const [users, setUsers] = useState([]);
   const [start, setStart] = useState(false);

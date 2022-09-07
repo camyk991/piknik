@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import Controls from "./Controls";
 
 export default function Video(props) {
+  //users - remote users (others)
+  //tracks - local tracks (us)
   const { users, tracks } = props;
   const [start, setStart] = useState(false);
   const [inCall, setInCall] = useState(false);
@@ -52,9 +54,6 @@ export default function Video(props) {
                     : users[parseInt(userIdInDisplayFrame.match(/\d/)[0]) - 2]
                         .videoTrack
                 }
-                // videoTrack={
-                //   users[userIdInDisplayFrame.match(/\d/)[0]].videoTrack
-                // }
                 style={{ height: "100%", width: "100%" }}
               />
             </div>
@@ -80,7 +79,7 @@ export default function Video(props) {
           </div>
         </div>
 
-        <div
+        {/* <div
           className={
             userIdInDisplayFrame
               ? "video__container small__video__containers"
@@ -90,7 +89,7 @@ export default function Video(props) {
           onClick={expandVideoFrame}
         >
           <div className="video-player" id="user-1"></div>
-        </div>
+        </div> */}
 
         {users.length > 0 &&
           users.map((user) => {
@@ -102,10 +101,10 @@ export default function Video(props) {
                       ? "video__container small__video__containers"
                       : "video__container"
                   }
-                  id="user-container-1"
+                  id={"user-container-" + user.id}
                   onClick={expandVideoFrame}
                 >
-                  <div className="video-player" id="user-1">
+                  <div className="video-player" id={"user-" + user.id}>
                     <AgoraVideoPlayer
                       videoTrack={user.videoTrack}
                       key={user.uid}

@@ -1,5 +1,6 @@
-switching between different users
-displaying members names
-group text chat
-add id to each member
-create chat
+// add id to each member and store them ({uuid, name})
+// switching between different users by uuid
+// displaying members names from users[uuid].name
+// group text chat (store in database) RTM
+// screen sharing ???
+// create rooms
