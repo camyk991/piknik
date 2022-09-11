@@ -9,6 +9,12 @@ export default function Video(props) {
   const [start, setStart] = useState(false);
   const [inCall, setInCall] = useState(false);
 
+  const [userIds, setUserIds] = useState([]);
+
+  //set remote users Ids
+  // setUserIds(users.map(() => users.uid));
+  // console.log(userIds);
+
   //handling the frame functionality
   const [videoFrame, setVideoFrame] = useState(false);
   const [userIdInDisplayFrame, setUserIdInDisplayFrame] = useState(null);
@@ -26,6 +32,13 @@ export default function Video(props) {
     setUserIdInDisplayFrame(e.currentTarget.id);
     setUserInDisplayFrame(e.currentTarget);
     e.currentTarget.style.display = "none";
+    // e.currentTarget.remove();
+
+    //users are not comming back to the circles (their videos)
+    //the AgoraVideoPlayer is disappearing
+    //prolly coz there can only be one videoPlayer
+    //so changing the display to "none" is not gonna cut it anymore
+    //we have to delete and add it to the frame and circle
   }
 
   function hideVideoFrame(e) {
@@ -46,13 +59,11 @@ export default function Video(props) {
       >
         {videoFrame ? (
           <div className="video__container" id={userIdInDisplayFrame}>
-            <div className="video-player" id="user-1">
+            <div className="video-player" id={"user-" + userIdInDisplayFrame}>
               <AgoraVideoPlayer
                 videoTrack={
-                  userIdInDisplayFrame.match(/\d/)[0] == 1
-                    ? tracks[1]
-                    : users[parseInt(userIdInDisplayFrame.match(/\d/)[0]) - 2]
-                        .videoTrack
+                  //make it search the videos properly (now works only for two)
+                  userIdInDisplayFrame == 1 ? tracks[1] : users[0].videoTrack
                 }
                 style={{ height: "100%", width: "100%" }}
               />
@@ -68,28 +79,20 @@ export default function Video(props) {
               ? "video__container small__video__containers"
               : "video__container"
           }
-          id="user-container-1"
+          id="1"
           onClick={expandVideoFrame}
         >
           <div className="video-player" id="user-1">
-            <AgoraVideoPlayer
-              videoTrack={tracks[1]}
-              style={{ height: "100%", width: "100%" }}
-            />
+            {!videoFrame || userIdInDisplayFrame != 1 ? (
+              <AgoraVideoPlayer
+                videoTrack={tracks[1]}
+                style={{ height: "100%", width: "100%" }}
+              />
+            ) : (
+              <div></div>
+            )}
           </div>
         </div>
-
-        {/* <div
-          className={
-            userIdInDisplayFrame
-              ? "video__container small__video__containers"
-              : "video__container"
-          }
-          id="user-container-2"
-          onClick={expandVideoFrame}
-        >
-          <div className="video-player" id="user-1"></div>
-        </div> */}
 
         {users.length > 0 &&
           users.map((user) => {
@@ -101,15 +104,19 @@ export default function Video(props) {
                       ? "video__container small__video__containers"
                       : "video__container"
                   }
-                  id={"user-container-" + user.id}
+                  id={user.uid}
                   onClick={expandVideoFrame}
                 >
-                  <div className="video-player" id={"user-" + user.id}>
-                    <AgoraVideoPlayer
-                      videoTrack={user.videoTrack}
-                      key={user.uid}
-                      style={{ height: "100%", width: "100%" }}
-                    />
+                  <div className="video-player" id={"user-" + user.uid}>
+                    {!videoFrame || userIdInDisplayFrame != user.uid ? (
+                      <AgoraVideoPlayer
+                        videoTrack={user.videoTrack}
+                        key={user.uid}
+                        style={{ height: "100%", width: "100%" }}
+                      />
+                    ) : (
+                      <div></div>
+                    )}
                   </div>
                 </div>
               );
@@ -117,16 +124,7 @@ export default function Video(props) {
           })}
       </div>
 
-      {/* STREAM ACTIONS */}
       <Controls tracks={tracks} setStart={setStart} setInCall={setInCall} />
-
-      {/* {inCall ? (
-        <Controls tracks={tracks} setStart={setStart} setInCall={setInCall} />
-      ) : (
-        <button id="join-btn" onClick={() => setInCall(true)}>
-          Join Stream
-        </button>
-      )} */}
     </section>
   );
 }
