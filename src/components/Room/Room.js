@@ -7,7 +7,7 @@ import Video from "./Video";
 import { useState } from "react";
 
 function Room(props) {
-  const { users, tracks } = props;
+  const { users, tracks, userName } = props;
   //scroll messages into view - doesn't work yet
   //let messagesContainer = document.getElementById("messages");
   // messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -98,12 +98,13 @@ function Room(props) {
               {tracks ? (
                 <div className="member__wrapper" id="member__1__wrapper">
                   <span className="green__icon"></span>
-                  <p className="member_name">Pete</p>
+                  <p className="member_name">{userName}</p>
+                  {/* <p className="member_name">Nala</p> */}
                 </div>
               ) : null}
 
               {users.length > 0 ? (
-                <div className="member__wrapper" id="member__1__wrapper">
+                <div className="member__wrapper" id="member__2__wrapper">
                   <span className="green__icon"></span>
                   <p className="member_name">Nala</p>
                 </div>
@@ -111,65 +112,8 @@ function Room(props) {
             </div>
           </section>
 
-          <Video tracks={tracks} users={users} />
-
           {/* STREAM CONTAINER */}
-
-          {/* <section id="stream__container">
-            <div
-              id="stream__box"
-              style={{ display: videoFrame ? "block" : "none" }}
-              onClick={hideVideoFrame}
-            >
-              {videoFrame ? (
-                <div className="video__container" id={userIdInDisplayFrame}>
-                  <div className="video-player" id={`user-1`}></div>
-                </div>
-              ) : null}
-            </div>
-
-            <div id="streams__container">
-              {inCall ? (
-                <VideoCall setInCall={setInCall} />
-              ) : (
-                console.log("die")
-              )}
-              <div
-                className={
-                  userIdInDisplayFrame
-                    ? "video__container small__video__containers"
-                    : "video__container"
-                }
-                id="user-container-1"
-                onClick={expandVideoFrame}
-              >
-                <div className="video-player" id="user-1"></div>
-              </div>
-
-              <div
-                className={
-                  userIdInDisplayFrame
-                    ? "video__container small__video__containers"
-                    : "video__container"
-                }
-                id="user-container-2"
-                onClick={expandVideoFrame}
-              >
-                <div className="video-player" id="user-2"></div>
-              </div>
-
-              <div
-                className={
-                  userIdInDisplayFrame
-                    ? "video__container small__video__containers"
-                    : "video__container"
-                }
-                id="user-container-3"
-                onClick={expandVideoFrame}
-              >
-                <div className="video-player" id="user-3"></div>
-              </div>
-            </div> */}
+          <Video tracks={tracks} users={users} />
 
           {/* MESSAGES CONTAINER */}
           <section

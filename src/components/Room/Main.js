@@ -6,11 +6,17 @@ import "./Lobby.css";
 
 function Main() {
   const [inCall, setInCall] = useState(false);
+  const [userName, setUserName] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setUserName(e.target.value);
+  }
 
   return (
     <div className="Main">
       {inCall ? (
-        <VideoCall setInCall={setInCall} />
+        <VideoCall setInCall={setInCall} userName={userName} />
       ) : (
         <div className="Lobby">
           <header id="nav">
@@ -65,6 +71,7 @@ function Main() {
                     name="name"
                     required
                     placeholder="Enter your display name..."
+                    onChange={handleSubmit}
                   />
                 </div>
 

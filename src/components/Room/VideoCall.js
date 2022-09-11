@@ -7,7 +7,7 @@ import {
 } from "./settings.js";
 import Room from "./Room.js";
 
-import uuid from "react-uuid";
+// import uuid from "react-uuid";
 
 {
   /* <li key={uuid()}> */
@@ -22,6 +22,7 @@ import uuid from "react-uuid";
 // console.log(`Random uuid ${uid}`);
 
 export default function VideoCall(props) {
+  const { userName } = props;
   const [users, setUsers] = useState([]);
   const [start, setStart] = useState(false);
   const client = useClient();
@@ -34,6 +35,7 @@ export default function VideoCall(props) {
         await client.subscribe(user, mediaType);
         if (mediaType === "video") {
           setUsers((prevUsers) => {
+            // user.userName = userName;
             return [...prevUsers, user];
           });
         }
@@ -87,7 +89,11 @@ export default function VideoCall(props) {
 
   return (
     <div>
-      <div>{start && tracks && <Room tracks={tracks} users={users} />}</div>
+      <div>
+        {start && tracks && (
+          <Room tracks={tracks} users={users} userName={userName} />
+        )}
+      </div>
     </div>
   );
 }
