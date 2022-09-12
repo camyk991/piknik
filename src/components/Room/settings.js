@@ -1,4 +1,8 @@
-import { createClient, createMicrophoneAndCameraTracks } from "agora-rtc-react";
+import {
+  createClient,
+  createMicrophoneAndCameraTracks,
+  createScreenVideoTrack,
+} from "agora-rtc-react";
 
 const appId = "a3c62a430c5841dea1060444ce7eaf9c";
 
@@ -14,3 +18,5 @@ export const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks(
   }
 );
 export const channelName = "main";
+
+export const useScreenVideoTrack = createScreenVideoTrack();
