@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { useClient } from "./settings";
 import styled from "styled-components";
+import { createScreenVideoTrack } from "agora-rtc-react";
 
 export default function Controls(props) {
   const client = useClient();
   const { tracks, setStart, setInCall } = props;
   const [trackState, setTrackState] = useState({ video: true, audio: true });
+  const [isScreenSharing, setIsScreenSharing] = useState(false);
 
   const mute = async (type) => {
     if (type === "audio") {
@@ -19,6 +21,13 @@ export default function Controls(props) {
         return { ...ps, video: !ps.video };
       });
     }
+  };
+
+  const screenShare = async () => {
+    //ask for a screen
+    setIsScreenSharing(true);
+    // const screenVideoTracks = await createScreenVideoTrack();
+    // console.log(screenVideoTracks);
   };
 
   const leaveChannel = async () => {
@@ -119,10 +128,12 @@ export default function Controls(props) {
           </ActionBtn>
         </div>
         <div>
+          {/* share screen */}
           <ActionBtn
             style={{
               backgroundColor: trackState.video ? "#845695" : "#262625",
             }}
+            onClick={() => screenShare()}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

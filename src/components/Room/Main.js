@@ -6,7 +6,7 @@ import "./Lobby.css";
 
 function Main() {
   const [inCall, setInCall] = useState(false);
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState();
 
   function handleSubmit(e) {
     e.preventDefault();

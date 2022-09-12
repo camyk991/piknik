@@ -28,6 +28,8 @@ export default function VideoCall(props) {
   const client = useClient();
   const { ready, tracks } = useMicrophoneAndCameraTracks();
 
+  const [memberName, setMemberName] = useState([]);
+
   useEffect(() => {
     let init = async (name) => {
       //publish video and audio
@@ -35,9 +37,12 @@ export default function VideoCall(props) {
         await client.subscribe(user, mediaType);
         if (mediaType === "video") {
           setUsers((prevUsers) => {
-            // user.userName = userName;
             return [...prevUsers, user];
           });
+
+          // setMemberName((prevName) => {
+          //   return [...prevName];
+          // });
         }
         if (mediaType === "audio") {
           user.audioTrack.play();

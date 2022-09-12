@@ -13,6 +13,7 @@
     "@material-ui/core": "^4.12.4",
     "@types/styled-components": "^5.1.26",
     "agora-rtc-react": "github:AgoraIO-Community/agora-rtc-react#v1.0.1",
+    "agora-rtm-react": "^1.1.1",
     "express": "^4.18.1",
     "material-ui": "^0.20.2",
     "mongoose": "^6.5.2",

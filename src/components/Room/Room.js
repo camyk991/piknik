@@ -95,20 +95,29 @@ function Room(props) {
             </div>
 
             <div id="member__list">
+              {/* our name */}
               {tracks ? (
                 <div className="member__wrapper" id="member__1__wrapper">
                   <span className="green__icon"></span>
                   <p className="member_name">{userName}</p>
-                  {/* <p className="member_name">Nala</p> */}
                 </div>
               ) : null}
 
-              {users.length > 0 ? (
-                <div className="member__wrapper" id="member__2__wrapper">
-                  <span className="green__icon"></span>
-                  <p className="member_name">Nala</p>
-                </div>
-              ) : null}
+              {/* members names */}
+              {users.length > 0 &&
+                users.map((user) => {
+                  if (user.uid) {
+                    return (
+                      <div
+                        className="member__wrapper"
+                        id={"member__" + user.uid + "__wrapper"}
+                      >
+                        <span className="green__icon"></span>
+                        <p className="member_name">{user.uid}</p>
+                      </div>
+                    );
+                  }
+                })}
             </div>
           </section>
 
