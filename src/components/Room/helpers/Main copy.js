@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "@material-ui/core";
-import VideoCall from "./VideoCall";
+import VideoCall from "../VideoCall";
 
 function Main() {
   const [inCall, setInCall] = useState(false);
