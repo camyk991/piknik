@@ -8,7 +8,19 @@ function Main() {
   const [inCall, setInCall] = useState(false);
   const [userName, setUserName] = useState();
 
-  function handleSubmit(e) {
+  const [roomId, setRoomId] = useState("");
+
+  function handleRoomId(e) {
+    e.preventDefault();
+    // const queryString = window.location.search;
+    // const urlParams = new URLSearchParams(queryString);
+
+    //room.html?room=roomId
+    // setRoomId(urlParams.get("room"));
+    setRoomId(e.target.value);
+  }
+
+  function handleNameInput(e) {
     e.preventDefault();
     setUserName(e.target.value);
   }
@@ -16,7 +28,7 @@ function Main() {
   return (
     <div className="Main">
       {inCall ? (
-        <VideoCall setInCall={setInCall} userName={userName} />
+        <VideoCall setInCall={setInCall} userName={userName} roomId={roomId} />
       ) : (
         <div className="Lobby">
           <header id="nav">
@@ -71,19 +83,20 @@ function Main() {
                     name="name"
                     required
                     placeholder="Enter your display name..."
-                    onChange={handleSubmit}
+                    onChange={handleNameInput}
                   />
                 </div>
 
-                {/* <div className="form__field__wrapper">
-              <label>Room Name</label>
-              <input
-                type="text"
-                name="room"
-                required
-                placeholder="Enter room name..."
-              />
-            </div> */}
+                <div className="form__field__wrapper">
+                  <label>Room Name</label>
+                  <input
+                    type="text"
+                    name="room"
+                    required
+                    placeholder="Enter room name..."
+                    onChange={handleRoomId}
+                  />
+                </div>
 
                 <button
                   className="form__field__wrapper"

@@ -1,4 +1,3 @@
-// displaying members names from users[uuid].name - managed to get their ids
 // group text chat (store in database) RTM
 // screen sharing ???
-// create rooms
+// get names from database and display

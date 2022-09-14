@@ -3,7 +3,7 @@ import {
   config,
   useClient,
   useMicrophoneAndCameraTracks,
-  channelName,
+  // channelName,
 } from "./settings.js";
 import Room from "./Room.js";
 
@@ -22,7 +22,7 @@ import Room from "./Room.js";
 // console.log(`Random uuid ${uid}`);
 
 export default function VideoCall(props) {
-  const { userName } = props;
+  const { userName, roomId } = props;
   const [users, setUsers] = useState([]);
   const [start, setStart] = useState(false);
   const client = useClient();
@@ -85,12 +85,12 @@ export default function VideoCall(props) {
     //create room
     if (ready && tracks) {
       try {
-        init(channelName);
+        init(roomId ? roomId : "main");
       } catch (error) {
         console.log(error);
       }
     }
-  }, [channelName, client, ready, tracks]);
+  }, [roomId, client, ready, tracks]);
 
   return (
     <div>
