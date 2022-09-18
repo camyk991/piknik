@@ -1,16 +1,20 @@
 import {
   createClient,
-  createChannel,
   createMicrophoneAndCameraTracks,
   createScreenVideoTrack,
 } from "agora-rtc-react";
 
-import { RtmMessage } from "agora-rtm-react";
+import { createChannel, RtmMessage } from "agora-rtm-react";
+
+// import { createChannel } from "agora-rtm-react";
+
+import { createClient as createRtmClient } from "agora-rtm-react";
 
 const appId = "a3c62a430c5841dea1060444ce7eaf9c";
 
 export const config = { mode: "rtc", codec: "vp8", appId: appId, token: null };
 export const useClient = createClient(config);
+
 export const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks(
   {},
   {
@@ -24,13 +28,18 @@ export const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks(
 
 // const useChannel = createChannel("channelName");
 
+//share screen
 export const useScreenVideoTrack = createScreenVideoTrack();
 
-// sdfhaksdfj
-// sdfhaksdfj
-// sdfhaksdfj
-// sdfhaksdfj
-// sdfhaksdfj
+// rtm
+// rtm
+// rtm
+// rtm
+// rtm
+
+export const useRtmClient = createRtmClient(appId);
+
+export const useChannel = createChannel("rtmtest");
 
 // const App = () => {
 //   const client = useClient();

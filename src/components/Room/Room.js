@@ -1,13 +1,12 @@
-// import "./agora-rtm-sdk-1.4.5.js";
-
 import logo from "./logo.png"; //change later
 import "./Room.css";
 import Video from "./Video";
+import Messages from "./Messages";
 
 import { useState } from "react";
 
 function Room(props) {
-  const { users, tracks, userName } = props;
+  const { users, tracks, userName, roomId } = props;
   //scroll messages into view - doesn't work yet
   //let messagesContainer = document.getElementById("messages");
   // messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -125,28 +124,35 @@ function Room(props) {
           <Video tracks={tracks} users={users} />
 
           {/* MESSAGES CONTAINER */}
-          <section
+          <Messages
+            tracks={tracks}
+            users={users}
+            userName={userName}
+            chatPanel={chatPanel}
+            roomId={roomId}
+          />
+          {/* <section
             id="messages__container"
             className={chatPanel ? "messages__container__hidden" : null}
           >
             <div id="messages">
-              {/* <div className="message__wrapper">
+              <div className="message__wrapper">
               <div className="message__body__bot">
                 <strong className="message__author__bot">🤖 Mumble Bot</strong>
                 <p className="message__text__bot">
                   Welcome to the room, Don't be shy, say hello!
                 </p>
               </div>
-            </div> */}
+            </div> 
 
-              {/* <div className="message__wrapper">
+             <div className="message__wrapper">
               <div className="message__body">
                 <strong className="message__author">Dennis Ivy</strong>
                 <p className="message__text">
                   Does anyone know when he will be back?
                 </p>
               </div>
-            </div> */}
+            </div> 
             </div>
 
             <form id="message__form">
@@ -156,7 +162,7 @@ function Room(props) {
                 placeholder="Send a message...."
               />
             </form>
-          </section>
+          </section> */}
         </div>
       </main>
     </div>

@@ -28,7 +28,7 @@ export default function VideoCall(props) {
   const client = useClient();
   const { ready, tracks } = useMicrophoneAndCameraTracks();
 
-  const [memberName, setMemberName] = useState([]);
+  // const [memberName, setMemberName] = useState([]);
 
   useEffect(() => {
     let init = async (name) => {
@@ -70,7 +70,8 @@ export default function VideoCall(props) {
 
       //try connecting to Agora
       try {
-        await client.join(config.appId, name, config.token, null);
+        await client.join(config.appId, name, config.token, client.uid);
+        // await client.join(config.appId, name, config.token, null);
       } catch (error) {
         console.log("error");
       }
@@ -96,7 +97,12 @@ export default function VideoCall(props) {
     <div>
       <div>
         {start && tracks && (
-          <Room tracks={tracks} users={users} userName={userName} />
+          <Room
+            tracks={tracks}
+            users={users}
+            userName={userName}
+            roomId={roomId}
+          />
         )}
       </div>
     </div>
