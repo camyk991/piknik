@@ -8,6 +8,8 @@ import { createChannel, RtmMessage } from "agora-rtm-react";
 
 // import { createChannel } from "agora-rtm-react";
 
+import AgoraRTM from "agora-rtm-react";
+
 import { createClient as createRtmClient } from "agora-rtm-react";
 
 const appId = "a3c62a430c5841dea1060444ce7eaf9c";
@@ -24,34 +26,17 @@ export const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks(
     },
   }
 );
-// export const channelName = "main";
 
+// export const channelName = "main";
 // const useChannel = createChannel("channelName");
 
 //share screen
 export const useScreenVideoTrack = createScreenVideoTrack();
 
 // rtm
-// rtm
-// rtm
-// rtm
-// rtm
-
-export const useRtmClient = createRtmClient(appId);
+// export const useRtmClient = createRtmClient(appId);
+export const useRtmClient = AgoraRTM.createInstance(
+  "a3c62a430c5841dea1060444ce7eaf9c"
+);
 
 export const useChannel = createChannel("rtmtest");
-
-// const App = () => {
-//   const client = useClient();
-//   const testChannel = useChannel(client);
-
-//   const login = async () => {
-//     await client.login({ uid: "userId" });
-//     await testChannel.join();
-//   };
-
-//   const sendMsg = async (text) => {
-//     const message = client.createMessage({ text, messageType: "TEXT" });
-//     await testChannel.sendMessage(message);
-//   };
-// };

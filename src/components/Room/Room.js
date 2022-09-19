@@ -3,10 +3,19 @@ import "./Room.css";
 import Video from "./Video";
 import Messages from "./Messages";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function Room(props) {
-  const { users, tracks, userName, roomId } = props;
+  const {
+    users,
+    tracks,
+    userName,
+    roomId,
+    rtmClient,
+    testChannel,
+    uid,
+    client,
+  } = props;
   //scroll messages into view - doesn't work yet
   //let messagesContainer = document.getElementById("messages");
   // messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -22,6 +31,56 @@ function Room(props) {
   function handleChatPanel() {
     setChatPanel(!chatPanel);
   }
+
+  useEffect(() => {
+    let rtmInit = async () => {
+      // //rtm
+      // setUid(client.uid.toString());
+      console.log(
+        "%c New Member: ",
+        "background: #222; color: #bada55",
+        client.uid
+      );
+
+      await rtmClient.login({ uid: String(client.uid) });
+
+      await testChannel.join();
+
+      // await testChannel
+      //   .getMembers()
+      //   .then((res) => {
+      //     setMembers(res);
+      //   })
+      //   .catch((err) => console.log(err));
+
+      // if (!members.includes(uid.toString())) {
+      //   testChannel
+      //     .join()
+      //     .then((res) => console.log(res))
+      //     .catch((err) => console.log(err));
+      // }
+
+      rtmClient.on("ConnectionStateChanged", async (state, reason) => {
+        console.log("ConnectionStateChanged", state, reason);
+      });
+
+      // testChannel.on("ChannelMessage", (msg, uid) => {
+      //   setTexts((previous) => {
+      //     return [...previous, { msg, uid }];
+      //   });
+      // });
+
+      testChannel.on("MemberJoined", (memberId) => {
+        console.log(
+          "%c New Member: ",
+          "background: #222; color: #bada55",
+          memberId
+        );
+      });
+    };
+
+    rtmInit();
+  }, []);
 
   return (
     <div className="Room">
@@ -130,6 +189,9 @@ function Room(props) {
             userName={userName}
             chatPanel={chatPanel}
             roomId={roomId}
+            rtmClient={rtmClient}
+            testChannel={testChannel}
+            uid={client.uid}
           />
           {/* <section
             id="messages__container"

@@ -1,59 +1,28 @@
 import "./Room.css";
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useChannel, useRtmClient } from "./settings.js";
 import { RtmMessage } from "agora-rtm-react";
 
 function Messages(props: any) {
-  const { users, tracks, userName, chatPanel, roomId } = props;
-
-  const rtmClient = useRtmClient();
-  const testChannel = useChannel(rtmClient);
-  const [texts, setTexts] = useState<messageStore[]>([]);
-  const [uid, setUid] = useState<string>("");
-  const [textInput, setTextInput] = useState<string>("");
+  const {
+    users,
+    tracks,
+    userName,
+    chatPanel,
+    roomId,
+    rtmClient,
+    testChannel,
+    uid,
+  } = props;
 
   //scroll messages into view - doesn't work yet
   //let messagesContainer = document.getElementById("messages");
   // messagesContainer.scrollTop = messagesContainer.scrollHeight;
 
-  // rtm
-  // const sendMsg = async (text: string) => {
-  //   let message = rtmClient.createMessage({ text, messageType: "TEXT" });
-  //   await testChannel.sendMessage(message);
-  //   setTexts((previous) => {
-  //     return [...previous, { msg: { text }, uid }];
-  //   });
-  //   setTextInput("");
-  // };
-
-  //gotta call this
-  let login = async () => {
-    setUid(String(Math.floor(Math.random() * 100000)));
-    await rtmClient.login({ uid: uid });
-    // await rtmClient.login({ uid: "1" });
-    // const x = rtmClient.createChannel(roomId);
-
-    // await rtmClient.addOrUpdateLocalUserAttributes({ name: displayName });
-    // testChannel = await rtmClient.createChannel(roomId);
-    // await x.join();
-    await testChannel.join();
-
-    rtmClient.on("ConnectionStateChanged", async (state, reason) => {
-      console.log("ConnectionStateChanged", state, reason);
-    });
-
-    testChannel.on("ChannelMessage", (msg, uid) => {
-      setTexts((previous) => {
-        return [...previous, { msg, uid }];
-      });
-    });
-
-    testChannel.on("MemberJoined", (memberId) => {
-      console.log("New Member: ", memberId);
-    });
-  };
+  const [texts, setTexts] = useState<messageStore[]>([]);
+  const [textInput, setTextInput] = useState<string>("");
 
   // let logout = async () => {
   //   await testChannel.leave();
@@ -62,17 +31,23 @@ function Messages(props: any) {
   //   client.removeAllListeners();
   // };
 
+  useEffect(() => {
+    testChannel.on("ChannelMessage", (msg: any, uid: any) => {
+      setTexts((previous) => {
+        return [...previous, { msg, uid }];
+      });
+    });
+  }, []);
+
   const sendMsg = async (e: React.FormEvent<HTMLFormElement>, text: string) => {
     e.preventDefault();
-    login();
-    setTimeout(async () => {
-      let message = rtmClient.createMessage({ text, messageType: "TEXT" });
-      await testChannel.sendMessage(message);
-      setTexts((previous) => {
-        return [...previous, { msg: { text }, uid }];
-      });
-      setTextInput("");
-    }, 3000);
+
+    let message = rtmClient.createMessage({ text, messageType: "TEXT" });
+    await testChannel.sendMessage(message);
+    setTexts((previous) => {
+      return [...previous, { msg: { text }, uid }];
+    });
+    setTextInput("");
   };
 
   return (
@@ -141,3 +116,24 @@ export type messageStore = {
 };
 
 export default Messages;
+
+// Future<AgoraRtmChannel?> _createChannel(String name) async {
+//   AgoraRtmChannel? channel = await _client?.createChannel(name);
+//   if (channel != null) {
+//     channel.onMemberJoined = (AgoraRtmMember member) {
+//       _log("Member joined: " +
+//           member.userId +
+//           ', channel: ' +
+//           member.channelId);
+//     };
+//     channel.onMemberLeft = (AgoraRtmMember member) {
+//       _log(
+//           "Member left: " + member.userId + ', channel: ' + member.channelId);
+//     };
+//     channel.onMessageReceived =
+//         (AgoraRtmMessage message, AgoraRtmMember member) {
+//       _log("Channel msg: " + member.userId + ", msg: " + message.text);
+//     };
+//   }
+//   return channel;
+// }

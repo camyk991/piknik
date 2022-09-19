@@ -4,8 +4,12 @@ import {
   useClient,
   useMicrophoneAndCameraTracks,
   // channelName,
+  useChannel,
+  useRtmClient,
 } from "./settings.js";
 import Room from "./Room.js";
+
+// import { RtmMessage } from "agora-rtm-react";
 
 // import uuid from "react-uuid";
 
@@ -25,16 +29,28 @@ export default function VideoCall(props) {
   const { userName, roomId } = props;
   const [users, setUsers] = useState([]);
   const [start, setStart] = useState(false);
-  const client = useClient();
+  let client = useClient();
   const { ready, tracks } = useMicrophoneAndCameraTracks();
 
   // const [memberName, setMemberName] = useState([]);
 
+  const rtmClient = useRtmClient;
+  const testChannel = useChannel(rtmClient);
+  // const testChannel = rtmClient.createChannel(roomId);
+  const [texts, setTexts] = useState([]);
+
+  let [members, setMembers] = useState([]);
+
+  const [uid, setUid] = useState("");
+
   useEffect(() => {
     let init = async (name) => {
+      //init rtm
+
       //publish video and audio
       client.on("user-published", async (user, mediaType) => {
         await client.subscribe(user, mediaType);
+
         if (mediaType === "video") {
           setUsers((prevUsers) => {
             return [...prevUsers, user];
@@ -68,10 +84,58 @@ export default function VideoCall(props) {
         });
       });
 
+      //rtm
+      // setUid(client.uid.toString());
+      // console.log(
+      //   "%c New Member: ",
+      //   "background: #222; color: #bada55",
+      //   client.uid
+      // );
+      // console.log(
+      //   "%c New Member: ",
+      //   "background: #222; color: #bada55",
+      //   client
+      // );
+
+      // await rtmClient.login({ uid: uid });
+
+      // await testChannel.join();
+
+      // // await testChannel
+      // //   .getMembers()
+      // //   .then((res) => {
+      // //     setMembers(res);
+      // //   })
+      // //   .catch((err) => console.log(err));
+
+      // // if (!members.includes(uid.toString())) {
+      // //   testChannel
+      // //     .join()
+      // //     .then((res) => console.log(res))
+      // //     .catch((err) => console.log(err));
+      // // }
+
+      // rtmClient.on("ConnectionStateChanged", async (state, reason) => {
+      //   console.log("ConnectionStateChanged", state, reason);
+      // });
+
+      // // testChannel.on("ChannelMessage", (msg, uid) => {
+      // //   setTexts((previous) => {
+      // //     return [...previous, { msg, uid }];
+      // //   });
+      // // });
+
+      // testChannel.on("MemberJoined", (memberId) => {
+      //   console.log(
+      //     "%c New Member: ",
+      //     "background: #222; color: #bada55",
+      //     memberId
+      //   );
+      // });
+
       //try connecting to Agora
       try {
-        await client.join(config.appId, name, config.token, client.uid);
-        // await client.join(config.appId, name, config.token, null);
+        await client.join(config.appId, name, config.token, uid);
       } catch (error) {
         console.log("error");
       }
@@ -102,6 +166,10 @@ export default function VideoCall(props) {
             users={users}
             userName={userName}
             roomId={roomId}
+            rtmClient={rtmClient}
+            testChannel={testChannel}
+            uid={uid}
+            client={client}
           />
         )}
       </div>
