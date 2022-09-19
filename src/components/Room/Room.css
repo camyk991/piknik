@@ -121,7 +121,7 @@
 
 .message__author {
   margin-right: 10px;
-  color: #2aca3e !important;
+  color: #2aca3e;
 }
 
 .message__author__bot {

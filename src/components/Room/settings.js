@@ -6,8 +6,6 @@ import {
 
 import { createChannel, RtmMessage } from "agora-rtm-react";
 
-// import { createChannel } from "agora-rtm-react";
-
 import AgoraRTM from "agora-rtm-react";
 
 import { createClient as createRtmClient } from "agora-rtm-react";
@@ -39,4 +37,6 @@ export const useRtmClient = AgoraRTM.createInstance(
   "a3c62a430c5841dea1060444ce7eaf9c"
 );
 
+//now only one channel is made
+//change that
 export const useChannel = createChannel("rtmtest");

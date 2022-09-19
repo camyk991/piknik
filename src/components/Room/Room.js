@@ -35,13 +35,6 @@ function Room(props) {
   useEffect(() => {
     let rtmInit = async () => {
       // //rtm
-      // setUid(client.uid.toString());
-      console.log(
-        "%c New Member: ",
-        "background: #222; color: #bada55",
-        client.uid
-      );
-
       await rtmClient.login({ uid: String(client.uid) });
 
       await testChannel.join();

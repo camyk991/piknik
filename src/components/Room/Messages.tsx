@@ -60,13 +60,13 @@ function Messages(props: any) {
         <div id="messages">
           {texts.map((text: messageStore, i) => (
             <div key={i} className="message__wrapper">
-              <div
-                className="message__body"
-                style={{
-                  backgroundColor: text.uid === uid ? "#ae00ff" : "#ccc",
-                }}
-              >
-                <strong className="message__author">{text.uid}</strong>
+              <div className="message__body">
+                <strong
+                  className="message__author"
+                  style={{ color: text.uid === uid ? "#ae00ff" : "#2aca3e" }}
+                >
+                  {text.uid}
+                </strong>
                 <p className="message__text">{text.msg["text"]}</p>
               </div>
             </div>
@@ -103,7 +103,6 @@ function Messages(props: any) {
             value={textInput}
             onChange={(e) => setTextInput(e.target.value)}
           />
-          {/* <button onClick={() => sendMsg(textInput)}>Send Message</button> */}
         </form>
       </section>
     </div>
