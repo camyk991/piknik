@@ -4,11 +4,7 @@ import {
   createScreenVideoTrack,
 } from "agora-rtc-react";
 
-import { createChannel, RtmMessage } from "agora-rtm-react";
-
 import AgoraRTM from "agora-rtm-react";
-
-import { createClient as createRtmClient } from "agora-rtm-react";
 
 const appId = "a3c62a430c5841dea1060444ce7eaf9c";
 
@@ -25,18 +21,10 @@ export const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks(
   }
 );
 
-// export const channelName = "main";
-// const useChannel = createChannel("channelName");
-
 //share screen
 export const useScreenVideoTrack = createScreenVideoTrack();
 
 // rtm
-// export const useRtmClient = createRtmClient(appId);
 export const useRtmClient = AgoraRTM.createInstance(
   "a3c62a430c5841dea1060444ce7eaf9c"
 );
-
-//now only one channel is made
-//change that
-export const useChannel = createChannel("rtmtest");

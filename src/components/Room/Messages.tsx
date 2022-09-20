@@ -2,7 +2,6 @@ import "./Room.css";
 import React from "react";
 import { useState, useEffect } from "react";
 
-import { useChannel, useRtmClient } from "./settings.js";
 import { RtmMessage } from "agora-rtm-react";
 
 function Messages(props: any) {
