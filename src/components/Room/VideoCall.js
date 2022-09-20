@@ -1,13 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   config,
   useClient,
   useMicrophoneAndCameraTracks,
   // channelName,
-  useChannel,
+  // useChannel,
   useRtmClient,
 } from "./settings.js";
 import Room from "./Room.js";
+
+import { createChannel, RtmChannel } from "agora-rtm-react";
+export const useChannel = createChannel("testrtm");
 
 // import { RtmMessage } from "agora-rtm-react";
 
@@ -35,11 +38,10 @@ export default function VideoCall(props) {
   // const [memberName, setMemberName] = useState([]);
 
   const rtmClient = useRtmClient;
-  const testChannel = useChannel(rtmClient);
-  // const testChannel = rtmClient.createChannel(roomId);
-  const [texts, setTexts] = useState([]);
 
-  let [members, setMembers] = useState([]);
+  // const testChannel = useChannel(rtmClient);
+  // const testChannel = rtmClient.createChannel(roomId);
+  const testChannel = useRef(rtmClient.createChannel(roomId)).current;
 
   const [uid, setUid] = useState("");
 
