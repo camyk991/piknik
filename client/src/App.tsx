@@ -1,11 +1,14 @@
-import React from 'react';
-import Main from './components/Room/Main';
+import React from "react";
+import Main from "./components/Room/Main";
 import { GlobalStyle } from "./GlobalStyles";
+import Profile from "./components/Profile/Profile";
 
 function App() {
   return (
     <div className="App">
-      <Main />
+      {/* <Main /> */}
+
+      <Profile />
 
       <GlobalStyle />
     </div>

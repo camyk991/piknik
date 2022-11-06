@@ -1,0 +1,243 @@
+:root {
+  --bg: #eaeaea;
+  --light-bg: #fff;
+  --black: #000;
+  --gray: #606060;
+  --cyan: #00dfd2;
+  --orange: #ffa34e;
+}
+
+/* 
+  header
+ */
+header {
+  background-color: var(--light-bg);
+  height: 10vh;
+  padding: 0 4vw;
+}
+
+header a {
+  color: var(--gray);
+}
+
+.header-content {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+}
+
+.header-logo,
+.header-links,
+.header-user-pic {
+  height: 10vh;
+  align-items: center;
+}
+
+.header-logo {
+  margin-right: auto;
+}
+
+.logo {
+  background-color: var(--gray);
+  border-radius: 1rem;
+  height: 50px;
+  width: 100px;
+  margin: 10px;
+}
+
+.user-pic {
+  background-color: var(--gray);
+  border-radius: 50%;
+  margin: 10px;
+  height: 50px;
+  width: 50px;
+}
+
+.header-links {
+  display: flex;
+  flex-direction: row;
+  gap: 1.5rem;
+}
+
+/* 
+  main
+ */
+main {
+  background-color: var(--bg);
+  color: var(--gray);
+  padding: 3rem 12vw;
+}
+
+.main-content > section {
+  border-radius: 1rem;
+  padding: 1rem;
+  background-color: var(--light-bg);
+}
+
+/* 
+  user info
+ */
+
+.user-info-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.user-info-id {
+  background-color: var(--bg);
+  width: fit-content;
+  height: fit-content;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+.user-info-pic {
+  width: fit-content;
+}
+
+.u-pic {
+  background-color: var(--gray);
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+}
+
+.user-info-main {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.user-info-name p {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--black);
+  margin-bottom: 15px;
+}
+
+.user-info-edit {
+  display: flex;
+  justify-content: flex-end;
+}
+
+#user-info-edit-btn {
+  background-color: var(--bg);
+  color: var(--gray);
+  padding: 5px 20px;
+}
+
+/* 
+  hours
+ */
+
+.hours-left-content {
+  text-align: center;
+}
+
+.hours-left-number {
+  color: var(--black);
+  font-size: 3rem;
+}
+
+/* 
+  deal
+ */
+.main-content > .deal-container p {
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.main-content .deal-container {
+  background-color: var(--cyan);
+  display: flex;
+  align-items: center;
+  color: var(--light-bg);
+}
+
+/* 
+  teachers, friends
+ */
+.teachers-header p,
+.friends-header p {
+  font-size: 20px;
+  color: var(--black);
+}
+
+.teacher-el,
+.friend-el {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem;
+}
+
+.teacher-name {
+  color: var(--black);
+}
+
+.t-pic {
+  background-color: var(--bg);
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+}
+
+.f-pic {
+  background-color: var(--bg);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+}
+
+/* 
+  feedback btn
+ */
+body {
+  position: relative;
+}
+
+.feedback-btn-container {
+  position: fixed;
+  width: fit-content;
+  right: 20px;
+  bottom: 20px;
+}
+
+#feedback-btn {
+  background-color: var(--orange);
+  width: fit-content;
+  padding: 0.6rem 1.6rem;
+  border-radius: 1.6rem;
+}
+
+/* 
+  grid 
+*/
+.main-content {
+  display: grid;
+  grid-template-columns: repeat(14, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  grid-column-gap: 10px;
+  grid-row-gap: 10px;
+}
+
+.user-info-container {
+  grid-area: 1 / 1 / 6 / 6;
+}
+
+.hours-left-container {
+  grid-area: 6 / 1 / 8 / 6;
+}
+
+.deal-container {
+  grid-area: 8 / 1 / 10 / 6;
+}
+
+.teachers-container {
+  grid-area: 1 / 6 / 7 / 15;
+}
+
+.friends-container {
+  grid-area: 7 / 6 / 10 / 15;
+}

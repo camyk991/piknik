@@ -12,11 +12,6 @@ function Main() {
 
   function handleRoomId(e) {
     e.preventDefault();
-    // const queryString = window.location.search;
-    // const urlParams = new URLSearchParams(queryString);
-
-    //room.html?room=roomId
-    // setRoomId(urlParams.get("room"));
     setRoomId(e.target.value);
   }
 

@@ -3,6 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import { RtmMessage } from "agora-rtm-react";
+import { text } from "stream/consumers";
 
 function Messages(props: any) {
   const {
@@ -25,17 +26,24 @@ function Messages(props: any) {
 
   // let logout = async () => {
   //   await testChannel.leave();
-  //   await client.logout();
+  //   await rtmClient.logout();
   //   testChannel.removeAllListeners();
-  //   client.removeAllListeners();
+  //   rtmClient.removeAllListeners();
   // };
 
+  //messages keep doubling
   useEffect(() => {
     testChannel.on("ChannelMessage", (msg: any, uid: any) => {
       setTexts((previous) => {
         return [...previous, { msg, uid }];
       });
     });
+
+    // testChannel.on("MemberJoined", (msg: any, uid: any) => {
+    //   setTexts((previous) => {
+    //     return [...previous, { msg, uid }];
+    //   });
+    // });
   }, []);
 
   const sendMsg = async (e: React.FormEvent<HTMLFormElement>, text: string) => {
@@ -43,9 +51,11 @@ function Messages(props: any) {
 
     let message = rtmClient.createMessage({ text, messageType: "TEXT" });
     await testChannel.sendMessage(message);
+
     setTexts((previous) => {
       return [...previous, { msg: { text }, uid }];
     });
+
     setTextInput("");
   };
 
@@ -70,6 +80,7 @@ function Messages(props: any) {
               </div>
             </div>
           ))}
+
           {/* <div className="message__wrapper">
               <div className="message__body__bot">
                 <strong className="message__author__bot">🤖 Mumble Bot</strong>

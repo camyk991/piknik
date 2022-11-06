@@ -9,20 +9,6 @@ import Room from "./Room.js";
 
 import { createChannel, RtmChannel } from "agora-rtm-react";
 
-// import uuid from "react-uuid";
-
-{
-  /* <li key={uuid()}> */
-}
-
-// let uid = sessionStorage.getItem("uid");
-// if (!uid) {
-//   uid = uuid();
-//   sessionStorage.setItem("uid", uid);
-// }
-
-// console.log(`Random uuid ${uid}`);
-
 export default function VideoCall(props) {
   const { userName, roomId } = props;
   const [users, setUsers] = useState([]);
@@ -75,55 +61,6 @@ export default function VideoCall(props) {
           return prevUsers.filter((User) => User.uid !== user.uid);
         });
       });
-
-      //rtm
-      // setUid(client.uid.toString());
-      // console.log(
-      //   "%c New Member: ",
-      //   "background: #222; color: #bada55",
-      //   client.uid
-      // );
-      // console.log(
-      //   "%c New Member: ",
-      //   "background: #222; color: #bada55",
-      //   client
-      // );
-
-      // await rtmClient.login({ uid: uid });
-
-      // await testChannel.join();
-
-      // // await testChannel
-      // //   .getMembers()
-      // //   .then((res) => {
-      // //     setMembers(res);
-      // //   })
-      // //   .catch((err) => console.log(err));
-
-      // // if (!members.includes(uid.toString())) {
-      // //   testChannel
-      // //     .join()
-      // //     .then((res) => console.log(res))
-      // //     .catch((err) => console.log(err));
-      // // }
-
-      // rtmClient.on("ConnectionStateChanged", async (state, reason) => {
-      //   console.log("ConnectionStateChanged", state, reason);
-      // });
-
-      // // testChannel.on("ChannelMessage", (msg, uid) => {
-      // //   setTexts((previous) => {
-      // //     return [...previous, { msg, uid }];
-      // //   });
-      // // });
-
-      // testChannel.on("MemberJoined", (memberId) => {
-      //   console.log(
-      //     "%c New Member: ",
-      //     "background: #222; color: #bada55",
-      //     memberId
-      //   );
-      // });
 
       //try connecting to Agora
       try {
