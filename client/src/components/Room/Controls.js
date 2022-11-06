@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useClient } from "./settings";
 import styled from "styled-components";
 import { createScreenVideoTrack } from "agora-rtc-react";
-import { ClientRequest } from "http";
 
 export default function Controls(props) {
   const client = useClient();
