@@ -16,6 +16,7 @@ function Room(props) {
     uid,
     client,
   } = props;
+
   //scroll messages into view - doesn't work yet
   //let messagesContainer = document.getElementById("messages");
   // messagesContainer.scrollTop = messagesContainer.scrollHeight;
@@ -34,9 +35,7 @@ function Room(props) {
 
   useEffect(() => {
     let rtmInit = async () => {
-      // //rtm
       await rtmClient.login({ uid: String(client.uid) });
-
       await testChannel.join();
 
       // await testChannel
@@ -52,24 +51,6 @@ function Room(props) {
       //     .then((res) => console.log(res))
       //     .catch((err) => console.log(err));
       // }
-
-      rtmClient.on("ConnectionStateChanged", async (state, reason) => {
-        console.log("ConnectionStateChanged", state, reason);
-      });
-
-      // testChannel.on("ChannelMessage", (msg, uid) => {
-      //   setTexts((previous) => {
-      //     return [...previous, { msg, uid }];
-      //   });
-      // });
-
-      testChannel.on("MemberJoined", (memberId) => {
-        console.log(
-          "%c New Member: ",
-          "background: #222; color: #bada55",
-          memberId
-        );
-      });
     };
 
     rtmInit();

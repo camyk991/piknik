@@ -2,13 +2,15 @@ import { useState } from "react";
 import { useClient } from "./settings";
 import styled from "styled-components";
 import { createScreenVideoTrack } from "agora-rtc-react";
+import { ClientRequest } from "http";
 
 export default function Controls(props) {
   const client = useClient();
-  const { tracks, setStart, setInCall } = props;
+  const { tracks, setStart, setInCall, users } = props;
   const [trackState, setTrackState] = useState({ video: true, audio: true });
   const [isScreenSharing, setIsScreenSharing] = useState(false);
 
+  //works only for us not for others
   const mute = async (type) => {
     if (type === "audio") {
       await tracks[0].setEnabled(!trackState.audio);

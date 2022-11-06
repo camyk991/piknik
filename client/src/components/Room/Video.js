@@ -113,7 +113,12 @@ export default function Video(props) {
           })}
       </div>
 
-      <Controls tracks={tracks} setStart={setStart} setInCall={setInCall} />
+      <Controls
+        tracks={tracks}
+        setStart={setStart}
+        setInCall={setInCall}
+        users={users}
+      />
     </section>
   );
 }
