@@ -33,10 +33,6 @@ header a {
   align-items: center;
 }
 
-.header-logo {
-  /* margin-right: auto; */
-}
-
 .logo {
   background-color: var(--gray);
   border-radius: 1rem;
@@ -70,7 +66,7 @@ header a {
 
 .header-links {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
   gap: 1.5rem;
   width: 100%;
@@ -173,6 +169,7 @@ main {
   background-color: var(--cyan);
   display: flex;
   align-items: center;
+  justify-content: center;
   color: var(--light-bg);
 }
 
@@ -266,7 +263,6 @@ body {
 /* 
   RWD 
 */
-
 @media (min-width: 640px) {
   .header-logo {
     margin-right: auto;
@@ -277,6 +273,7 @@ body {
   }
 
   .header-links {
+    flex-direction: row;
     justify-content: flex-end;
   }
 

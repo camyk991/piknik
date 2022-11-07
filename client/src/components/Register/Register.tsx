@@ -53,12 +53,14 @@ const Register: React.FC<Props> = ({ isLoggedIn }) => {
       // navigate('/sign-in');
     } else {
       console.log(data.errors);
-      if (data.errorrs && data.errors.length) {
+      if (data.errors.length) {
+        console.log('test');
         let messages: JSX.Element[] = [];
         data.errors.forEach((el: any) => {
           messages.push(el.msg);
         });
-
+        
+        console.log(messages);
         setInfo(messages);
       }
       setLoading(false);
