@@ -45,6 +45,7 @@ const userModel_1 = __importDefault(require("./models/userModel"));
 const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+console.log("test!");
 const app = (0, express_1.default)();
 const port = 5000;
 (0, db_1.default)();
@@ -52,9 +53,7 @@ app.use((0, cors_1.default)());
 app.get("/", (_, res) => {
     res.status(200).send();
 });
-app
-    .use(body_parser_1.default.json())
-    .use(body_parser_1.default.urlencoded({ extended: true }));
+app.use(body_parser_1.default.json()).use(body_parser_1.default.urlencoded({ extended: true }));
 // Handle register
 app.post("/api/register", [
     (0, express_validator_1.check)("password")
@@ -99,16 +98,16 @@ app.post("/api/register", [
     }
 }));
 // Handle login
-app.post('/api/login', [
-    (0, express_validator_1.check)('password').trim().escape(),
-    (0, express_validator_1.check)('mail').isEmail().trim().escape().normalizeEmail(),
+app.post("/api/login", [
+    (0, express_validator_1.check)("password").trim().escape(),
+    (0, express_validator_1.check)("mail").isEmail().trim().escape().normalizeEmail(),
 ], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     console.log(req.body);
     const user = yield userModel_1.default.findOne({
         email: req.body.mail,
     });
     if (!user) {
-        return res.json({ ok: false, error: 'Taki użytkownik nie istnieje' });
+        return res.json({ ok: false, error: "Taki użytkownik nie istnieje" });
     }
     const isPasswordValid = yield bcrypt_1.default.compare(req.body.password, user.password);
     if (isPasswordValid && process.env.JWT_SECRET) {
@@ -116,14 +115,21 @@ app.post('/api/login', [
             name: user.name,
             email: user.email,
         }, process.env.JWT_SECRET);
-        return res.json({ ok: true, user: {
+        return res.json({
+            ok: true,
+            user: {
                 token: token,
                 name: user.name,
-                mail: user.email
-            } });
+                mail: user.email,
+            },
+        });
     }
     else {
-        return res.json({ ok: false, user: false, error: 'Mail lub hasło się nie zgadzają' });
+        return res.json({
+            ok: false,
+            user: false,
+            error: "Mail lub hasło się nie zgadzają",
+        });
     }
 }));
 app.listen(port, () => console.log(`Running on port http://localhost:${port}`));

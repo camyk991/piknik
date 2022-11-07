@@ -216,28 +216,61 @@ body {
 */
 .main-content {
   display: grid;
-  grid-template-columns: repeat(14, 1fr);
-  grid-template-rows: repeat(9, 1fr);
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(5, auto);
   grid-column-gap: 10px;
   grid-row-gap: 10px;
 }
 
 .user-info-container {
-  grid-area: 1 / 1 / 6 / 6;
+  grid-area: 1 / 1 / 2 / 2;
 }
 
 .hours-left-container {
-  grid-area: 6 / 1 / 8 / 6;
+  grid-area: 2 / 1 / 3 / 2;
 }
 
 .deal-container {
-  grid-area: 8 / 1 / 10 / 6;
+  grid-area: 3 / 1 / 4 / 2;
 }
 
 .teachers-container {
-  grid-area: 1 / 6 / 7 / 15;
+  grid-area: 4 / 1 / 5 / 2;
 }
 
 .friends-container {
-  grid-area: 7 / 6 / 10 / 15;
+  grid-area: 5 / 1 / 6 / 2;
+}
+
+/* 
+  RWD 
+*/
+@media (min-width: 920px) {
+  .main-content {
+    display: grid;
+    grid-template-columns: repeat(14, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    grid-column-gap: 10px;
+    grid-row-gap: 10px;
+  }
+
+  .user-info-container {
+    grid-area: 1 / 1 / 6 / 6;
+  }
+
+  .hours-left-container {
+    grid-area: 6 / 1 / 8 / 6;
+  }
+
+  .deal-container {
+    grid-area: 8 / 1 / 10 / 6;
+  }
+
+  .teachers-container {
+    grid-area: 1 / 6 / 7 / 15;
+  }
+
+  .friends-container {
+    grid-area: 7 / 6 / 10 / 15;
+  }
 }

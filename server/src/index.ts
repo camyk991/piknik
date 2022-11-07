@@ -5,24 +5,24 @@ import connectDB from "./config/db";
 import { check, validationResult } from "express-validator";
 import bcrypt from "bcrypt";
 import User from "./models/userModel";
-import cors from 'cors'
-import bodyParser from 'body-parser'
-import jwt from 'jsonwebtoken'
+import cors from "cors";
+import bodyParser from "body-parser";
+import jwt from "jsonwebtoken";
+
+console.log("test!");
 
 const app = express();
 const port = 5000;
 
 connectDB();
 
-app.use(cors())
+app.use(cors());
 
 app.get("/", (_, res) => {
   res.status(200).send();
 });
 
-app
-.use(bodyParser.json())
-.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json()).use(bodyParser.urlencoded({ extended: true }));
 
 // Handle register
 app.post(
@@ -75,42 +75,53 @@ app.post(
 );
 
 // Handle login
-app.post('/api/login', [
-  check('password').trim().escape(),
-  check('mail').isEmail().trim().escape().normalizeEmail(),
-], async (req: express.Request, res: express.Response) => {
-  console.log(req.body);
+app.post(
+  "/api/login",
+  [
+    check("password").trim().escape(),
+    check("mail").isEmail().trim().escape().normalizeEmail(),
+  ],
+  async (req: express.Request, res: express.Response) => {
+    console.log(req.body);
 
-  const user = await User.findOne({
-    email: req.body.mail,
-  })
-  
-  if (!user) {
-    return res.json({ ok: false, error: 'Taki użytkownik nie istnieje' });
+    const user = await User.findOne({
+      email: req.body.mail,
+    });
+
+    if (!user) {
+      return res.json({ ok: false, error: "Taki użytkownik nie istnieje" });
+    }
+
+    const isPasswordValid = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+
+    if (isPasswordValid && process.env.JWT_SECRET) {
+      const token = jwt.sign(
+        {
+          name: user.name,
+          email: user.email,
+        },
+        process.env.JWT_SECRET
+      );
+
+      return res.json({
+        ok: true,
+        user: {
+          token: token,
+          name: user.name,
+          mail: user.email,
+        },
+      });
+    } else {
+      return res.json({
+        ok: false,
+        user: false,
+        error: "Mail lub hasło się nie zgadzają",
+      });
+    }
   }
-    
-  const isPasswordValid = await bcrypt.compare(
-    req.body.password,
-    user.password
-  )
-
-  if (isPasswordValid && process.env.JWT_SECRET) {
-    const token = jwt.sign(
-      {
-        name: user.name,
-        email: user.email,
-      },
-      process.env.JWT_SECRET
-    )
-
-    return res.json({ ok: true, user: {
-      token: token,
-      name: user.name,
-      mail: user.email
-    } })
-  } else {
-    return res.json({ ok: false, user: false, error: 'Mail lub hasło się nie zgadzają'})
-  }
-})
+);
 
 app.listen(port, () => console.log(`Running on port http://localhost:${port}`));
