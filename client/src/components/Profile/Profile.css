@@ -34,7 +34,7 @@ header a {
 }
 
 .header-logo {
-  margin-right: auto;
+  /* margin-right: auto; */
 }
 
 .logo {
@@ -53,10 +53,31 @@ header a {
   width: 50px;
 }
 
+.header-menu {
+  width: 50px;
+  height: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.header-menu span {
+  width: 50px;
+  height: 3px;
+  background-color: var(--gray);
+  border-radius: 1px;
+}
+
 .header-links {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
   gap: 1.5rem;
+  width: 100%;
+}
+
+.header-link {
+  display: none;
 }
 
 /* 
@@ -245,6 +266,25 @@ body {
 /* 
   RWD 
 */
+
+@media (min-width: 640px) {
+  .header-logo {
+    margin-right: auto;
+  }
+
+  .header-menu {
+    display: none;
+  }
+
+  .header-links {
+    justify-content: flex-end;
+  }
+
+  .header-link {
+    display: flex;
+  }
+}
+
 @media (min-width: 920px) {
   .main-content {
     display: grid;
