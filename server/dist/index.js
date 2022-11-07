@@ -95,7 +95,7 @@ app.post("/api/register", [
     }
     catch (err) {
         console.log(err);
-        res.json({ ok: false, error: "Posiadasz już konto!" });
+        res.json({ ok: false, errors: [{ msg: "Posiadasz już konto!" }] });
     }
 }));
 // Handle login
