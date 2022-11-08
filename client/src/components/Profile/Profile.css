@@ -79,7 +79,7 @@ header a {
 /* 
   main
  */
-main {
+#profile-main {
   background-color: var(--bg);
   color: var(--gray);
   padding: 3rem 12vw;
