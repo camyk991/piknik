@@ -2,7 +2,6 @@ import "./Profile.css";
 import React, { useState } from "react";
 import VideoCall from "../Room/VideoCall";
 
-//creating room uuid
 import { v4 as uuidv4 } from "uuid";
 
 function Profile(props: any) {
@@ -13,18 +12,18 @@ function Profile(props: any) {
     e.preventDefault();
     setInCall(true);
 
+    //creating room uuid
     const inviteCode = uuidv4();
-    //go to a different url with the uuid
-    // window.location.href = `?room=${inviteCode}`;
+
     window.history.replaceState({}, "", `?room=${inviteCode}`);
 
     //get the uuid from url
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    let roomIdtemp = urlParams.get("room") || "default";
-    setRoomId(roomIdtemp);
+    // const queryString = window.location.search;
+    // const urlParams = new URLSearchParams(queryString);
+    // let roomIdtemp = urlParams.get("room") || "default";
+    // setRoomId(roomIdtemp);
 
-    //create room with the roomId as the uuid
+    setRoomId(inviteCode);
   }
 
   return (
@@ -32,7 +31,6 @@ function Profile(props: any) {
       {inCall ? (
         <VideoCall setInCall={setInCall} userName={"John"} roomId={roomId} />
       ) : (
-        // <p>Hello there {roomId}</p>
         <div className="Dashboard">
           <header>
             <div className="header-content">
