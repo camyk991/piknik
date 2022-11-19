@@ -10,11 +10,21 @@ import Room from "./Room.js";
 import { createChannel, RtmChannel } from "agora-rtm-react";
 
 export default function VideoCall(props) {
-  const { userName, roomId } = props;
+  const { userName, roomId, setInCall, setRoomId } = props;
   const [users, setUsers] = useState([]);
   const [start, setStart] = useState(false);
   let client = useClient();
   const { ready, tracks } = useMicrophoneAndCameraTracks();
+
+  const url = window.location.href;
+  const urlArr = url.split("/");
+  const lastSegment = urlArr.pop() || urlArr.pop();
+
+  //get the uuid from url
+  // const queryString = window.location.search;
+  // const urlParams = new URLSearchParams(queryString);
+  // let roomIdtemp = urlParams.get("room") || "default";
+  // setRoomId(roomIdtemp);
 
   // const [memberName, setMemberName] = useState([]);
 
@@ -25,6 +35,12 @@ export default function VideoCall(props) {
 
   useEffect(() => {
     let init = async (name) => {
+      if (roomId == "1") {
+        setRoomId(lastSegment);
+      }
+
+      console.log(`%c ${lastSegment} `, "background: #222; color: #bada55");
+
       //publish video and audio
       client.on("user-published", async (user, mediaType) => {
         await client.subscribe(user, mediaType);
@@ -79,12 +95,12 @@ export default function VideoCall(props) {
     //create room
     if (ready && tracks) {
       try {
-        init(roomId ? roomId : "main");
+        init(lastSegment ? lastSegment : "main");
       } catch (error) {
         console.log(error);
       }
     }
-  }, [roomId, client, ready, tracks]);
+  }, [lastSegment, client, ready, tracks]);
 
   return (
     <div>
@@ -94,7 +110,7 @@ export default function VideoCall(props) {
             tracks={tracks}
             users={users}
             userName={userName}
-            roomId={roomId}
+            roomId={lastSegment}
             rtmClient={rtmClient}
             testChannel={testChannel}
             uid={uid}
