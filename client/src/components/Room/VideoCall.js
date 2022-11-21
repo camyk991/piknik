@@ -3,11 +3,16 @@ import {
   config,
   useClient,
   useMicrophoneAndCameraTracks,
-  useRtmClient,
+  // useRtmClient,
 } from "./settings.js";
 import Room from "./Room.js";
 
-import { createChannel, RtmChannel } from "agora-rtm-react";
+// import { createChannel, RtmChannel } from "agora-rtm-react";
+import { createClient, createChannel } from "agora-rtm-react";
+
+export const useRtmClient = createClient("a3c62a430c5841dea1060444ce7eaf9c");
+
+export const useChannel = createChannel(window.location.href.split("/").pop());
 
 export default function VideoCall(props) {
   const { userName, roomId, setInCall, setRoomId } = props;
@@ -16,20 +21,19 @@ export default function VideoCall(props) {
   let client = useClient();
   const { ready, tracks } = useMicrophoneAndCameraTracks();
 
+  //rtm init
+  const rtmClient = useRtmClient();
+  //const testChannel = useChannel(rtmClient);
+
+  //get the roomId from the url
   const url = window.location.href;
   const urlArr = url.split("/");
   const lastSegment = urlArr.pop() || urlArr.pop();
 
-  //get the uuid from url
-  // const queryString = window.location.search;
-  // const urlParams = new URLSearchParams(queryString);
-  // let roomIdtemp = urlParams.get("room") || "default";
-  // setRoomId(roomIdtemp);
-
   // const [memberName, setMemberName] = useState([]);
 
-  const rtmClient = useRtmClient;
-  const testChannel = useRef(rtmClient.createChannel(roomId)).current;
+  // const rtmClient = useRtmClient;
+  const testChannel = useRef(rtmClient.createChannel(lastSegment)).current;
 
   const [uid, setUid] = useState("");
 
@@ -47,7 +51,7 @@ export default function VideoCall(props) {
 
         if (mediaType === "video") {
           setUsers((prevUsers) => {
-            return [...prevUsers, user];
+            return [...new Set([...prevUsers, user])];
           });
 
           // setMemberName((prevName) => {
@@ -81,21 +85,33 @@ export default function VideoCall(props) {
       //try connecting to Agora
       try {
         await client.join(config.appId, name, config.token, uid);
+
+        //get video and audio and publish them
+        if (tracks) {
+          await client.publish([tracks[0], tracks[1]]);
+        }
+        setStart(true);
       } catch (error) {
         console.log("error");
       }
 
-      //get video and audio and publish them
-      if (tracks) {
-        await client.publish([tracks[0], tracks[1]]);
-      }
-      setStart(true);
+      // //get video and audio and publish them
+      // if (tracks) {
+      //   await client.publish([tracks[0], tracks[1]]);
+      // }
+      // setStart(true);
+    };
+
+    let rtmInit = async () => {
+      await rtmClient.login({ uid: String(Date.now()) });
+      await testChannel.join();
     };
 
     //create room
     if (ready && tracks) {
       try {
         init(lastSegment ? lastSegment : "main");
+        rtmInit();
       } catch (error) {
         console.log(error);
       }

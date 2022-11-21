@@ -35,7 +35,19 @@ function Messages(props: any) {
   useEffect(() => {
     testChannel.on("ChannelMessage", (msg: any, uid: any) => {
       setTexts((previous) => {
-        return [...previous, { msg, uid }];
+        //preventing doubled received messages
+        if (previous.length > 0) {
+          if (
+            previous[previous.length - 1].uid == uid &&
+            previous[previous.length - 1].msg == msg
+          ) {
+            return [...previous];
+          } else {
+            return [...previous, { msg, uid }];
+          }
+        } else {
+          return [...previous, { msg, uid }];
+        }
       });
     });
 

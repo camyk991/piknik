@@ -4,7 +4,7 @@ import {
   createScreenVideoTrack,
 } from "agora-rtc-react";
 
-import AgoraRTM from "agora-rtm-react";
+// import AgoraRTM from "agora-rtm-react";
 
 const appId = "a3c62a430c5841dea1060444ce7eaf9c";
 
@@ -25,6 +25,12 @@ export const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks(
 export const useScreenVideoTrack = createScreenVideoTrack();
 
 // rtm
-export const useRtmClient = AgoraRTM.createInstance(
-  "a3c62a430c5841dea1060444ce7eaf9c"
-);
+// export const useRtmClient = AgoraRTM.createInstance(
+//   "a3c62a430c5841dea1060444ce7eaf9c"
+// );
+
+// const useRtmClient = AgoraRTM.createClient("a3c62a430c5841dea1060444ce7eaf9c");
+// const useChannel = AgoraRTM.createChannel("test");
+
+// const rtmClient = useRtmClient();
+// const testChannel = useChannel(rtmClient);

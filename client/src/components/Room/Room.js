@@ -5,6 +5,8 @@ import Messages from "./Messages";
 
 import { useEffect, useState } from "react";
 
+import { v4 as uuidv4 } from "uuid";
+
 function Room(props) {
   const {
     users,
@@ -33,28 +35,31 @@ function Room(props) {
     setChatPanel(!chatPanel);
   }
 
-  useEffect(() => {
-    let rtmInit = async () => {
-      await rtmClient.login({ uid: String(client.uid) });
-      await testChannel.join();
+  // useEffect(() => {
+  //   let rtmInit = async () => {
+  //     await rtmClient.login({ uid: String(client.uid) });
+  //     await testChannel.join();
 
-      // await testChannel
-      //   .getMembers()
-      //   .then((res) => {
-      //     setMembers(res);
-      //   })
-      //   .catch((err) => console.log(err));
+  //     // await rtmClient.login({ uid: String(client.uid) });
+  //     // await testChannel.join();
 
-      // if (!members.includes(uid.toString())) {
-      //   testChannel
-      //     .join()
-      //     .then((res) => console.log(res))
-      //     .catch((err) => console.log(err));
-      // }
-    };
+  //     // await testChannel
+  //     //   .getMembers()
+  //     //   .then((res) => {
+  //     //     setMembers(res);
+  //     //   })
+  //     //   .catch((err) => console.log(err));
 
-    rtmInit();
-  }, []);
+  //     // if (!members.includes(uid.toString())) {
+  //     //   testChannel
+  //     //     .join()
+  //     //     .then((res) => console.log(res))
+  //     //     .catch((err) => console.log(err));
+  //     // }
+  //   };
+
+  //   rtmInit();
+  // }, []);
 
   return (
     <div className="Room">
