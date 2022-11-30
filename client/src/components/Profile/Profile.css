@@ -1,10 +1,11 @@
 :root {
-  --bg: #eaeaea;
+  --bg: #dce7ea;
   --light-bg: #fff;
   --black: #000;
   --gray: #606060;
-  --cyan: #00dfd2;
+  --cyan: #4386e6;
   --orange: #ffa34e;
+  --light-blue: #5fcfd1;
 }
 
 /* 
@@ -89,6 +90,10 @@ header a {
   border-radius: 1rem;
   padding: 1rem;
   background-color: var(--light-bg);
+
+  -webkit-box-shadow: 8px 8px 28px -15px rgba(66, 87, 90, 0.85);
+  -moz-box-shadow: 8px 8px 28px -15px rgba(66, 87, 90, 0.85);
+  box-shadow: 8px 8px 28px -15px rgba(66, 87, 90, 0.85);
 }
 
 /* 
@@ -236,8 +241,8 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: repeat(5, auto);
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
+  grid-column-gap: 15px;
+  grid-row-gap: 15px;
 }
 
 .user-info-container {
@@ -287,8 +292,8 @@ body {
     display: grid;
     grid-template-columns: repeat(14, 1fr);
     grid-template-rows: repeat(9, 1fr);
-    grid-column-gap: 10px;
-    grid-row-gap: 10px;
+    grid-column-gap: 20px;
+    grid-row-gap: 20px;
   }
 
   .user-info-container {

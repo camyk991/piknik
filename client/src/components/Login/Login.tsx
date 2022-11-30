@@ -1,16 +1,23 @@
-import React, { useEffect, useState } from 'react'
-import { Form, Input, Submit, Loader, FormWrapper, Heading } from './Login.styles'
+import React, { useEffect, useState } from "react";
+import {
+  Form,
+  Input,
+  Submit,
+  Loader,
+  FormWrapper,
+  Heading,
+} from "./Login.styles";
 
-import { Link, useNavigate } from 'react-router-dom';
-import API, { UserInfoType } from '../../API';
+import { Link, useNavigate } from "react-router-dom";
+import API, { UserInfoType } from "../../API";
 
 type Props = {
   isLoggedIn: boolean;
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   setUserData: React.Dispatch<React.SetStateAction<UserInfoType | undefined>>;
-}
+};
 
-const Login: React.FC<Props> = ({isLoggedIn, setLoggedIn, setUserData}) => {
+const Login: React.FC<Props> = ({ isLoggedIn, setLoggedIn, setUserData }) => {
   const [password, setPassword] = useState("");
   const [mail, setMail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -22,7 +29,7 @@ const Login: React.FC<Props> = ({isLoggedIn, setLoggedIn, setUserData}) => {
     e.preventDefault();
     setLoading(true);
 
-    if ( !mail || !password ) {
+    if (!mail || !password) {
       setInfo("Uzupełnij dane");
       setLoading(false);
       return;
@@ -35,27 +42,25 @@ const Login: React.FC<Props> = ({isLoggedIn, setLoggedIn, setUserData}) => {
     console.log(data);
 
     if (data.ok) {
-      setLoading(false)
+      setLoading(false);
       setInfo("Zalogowano!");
       setLoggedIn(true);
       setUserData(data.user);
-      localStorage.setItem('user', JSON.stringify(data.user));
-      navigate('/');
+      localStorage.setItem("user", JSON.stringify(data.user));
+      navigate("/");
     } else {
       setInfo(data.error);
       setLoggedIn(false);
-      setLoading(false)
+      setLoading(false);
     }
-
   };
 
   useEffect(() => {
-    if (isLoggedIn)
-      navigate('/dashboard')
-  }, [])
+    if (isLoggedIn) navigate("/dashboard");
+  }, []);
 
   return (
-    <div className='container'>
+    <div className="container">
       <FormWrapper>
         <Heading>Zaloguj się i zacznij pobierać!</Heading>
 
@@ -68,10 +73,10 @@ const Login: React.FC<Props> = ({isLoggedIn, setLoggedIn, setUserData}) => {
               name="mail"
               placeholder="E-mail"
               required
-              autoComplete='off'
+              autoComplete="off"
             />
-          </p>  
-      
+          </p>
+
           <p>
             <Input
               onChange={(e) => setPassword(e.target.value)}
@@ -79,10 +84,15 @@ const Login: React.FC<Props> = ({isLoggedIn, setLoggedIn, setUserData}) => {
               name="subject"
               placeholder="Hasło"
               required
-              autoComplete='new-password'
+              autoComplete="new-password"
             />
           </p>
-          <p>Nie masz konta?<Link to="/sign-up"><b>&nbsp;Zarejestruj się!</b></Link></p>
+          <p>
+            Nie masz konta?
+            <Link to="/sign-up">
+              <b>&nbsp;Zarejestruj się!</b>
+            </Link>
+          </p>
           <p>
             <Submit type="submit">Zaloguj się</Submit>
           </p>
@@ -91,7 +101,7 @@ const Login: React.FC<Props> = ({isLoggedIn, setLoggedIn, setUserData}) => {
         {loading ? <Loader /> : null}
       </FormWrapper>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

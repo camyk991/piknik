@@ -45,6 +45,7 @@ const userModel_1 = __importDefault(require("./models/userModel"));
 const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
+const offerModel_1 = __importDefault(require("./models/offerModel"));
 console.log("test!");
 const app = (0, express_1.default)();
 const port = 5000;
@@ -129,6 +130,36 @@ app.post("/api/login", [
             ok: false,
             user: false,
             error: "Mail lub hasło się nie zgadzają",
+        });
+    }
+}));
+// Handle post offer
+app.post("/api/postoffer", [
+    (0, express_validator_1.check)("title").trim().escape(),
+    (0, express_validator_1.check)("subject").trim().escape(),
+    (0, express_validator_1.check)("info").trim().escape(),
+    (0, express_validator_1.check)("price").trim().escape(),
+    (0, express_validator_1.check)("duration").trim().escape(),
+], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const errors = (0, express_validator_1.validationResult)(req);
+    if (!errors.isEmpty()) {
+        return res.json({ ok: false, errors: errors.array() });
+    }
+    try {
+        yield offerModel_1.default.create({
+            title: req.body.title,
+            subject: req.body.subject,
+            info: req.body.info,
+            price: req.body.price,
+            duration: req.body.duration,
+        });
+        res.json({ ok: true });
+    }
+    catch (err) {
+        console.log(err);
+        res.json({
+            ok: false,
+            errors: [{ msg: "Utworzenie oferty się nie udało!" }],
         });
     }
 }));

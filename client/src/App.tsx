@@ -9,6 +9,7 @@ import { useIsLoggedIn } from "./hooks/useIsLoggedIn";
 import VideoCall from "./components/Room/VideoCall";
 import { useIsInRoom } from "./hooks/useIsInRoom";
 import { v4 as uuidv4 } from "uuid";
+import PostOffer from "./components/PostOffer/PostOffer";
 
 function App() {
   const { loggedIn, setLoggedIn, userData, setUserData } = useIsLoggedIn();
@@ -48,6 +49,7 @@ function App() {
           element={<Profile setRoomId={setRoomId} roomId={roomId} />}
         />
         <Route path="/" element={<Main />} />
+        <Route path="/post-offer" element={<PostOffer />} />
       </Routes>
       <GlobalStyle />
     </div>

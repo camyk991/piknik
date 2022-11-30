@@ -8,6 +8,7 @@ import User from "./models/userModel";
 import cors from "cors";
 import bodyParser from "body-parser";
 import jwt from "jsonwebtoken";
+import Offer from "./models/offerModel";
 
 console.log("test!");
 
@@ -69,7 +70,7 @@ app.post(
       res.json({ ok: true });
     } catch (err) {
       console.log(err);
-      res.json({ ok: false, errors: [{msg:"Posiadasz już konto!"}] });
+      res.json({ ok: false, errors: [{ msg: "Posiadasz już konto!" }] });
     }
   }
 );
@@ -119,6 +120,43 @@ app.post(
         ok: false,
         user: false,
         error: "Mail lub hasło się nie zgadzają",
+      });
+    }
+  }
+);
+
+// Handle post offer
+app.post(
+  "/api/postoffer",
+  [
+    check("title").trim().escape(),
+    check("subject").trim().escape(),
+    check("info").trim().escape(),
+    check("price").trim().escape(),
+    check("duration").trim().escape(),
+  ],
+  async (req: express.Request, res: express.Response) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.json({ ok: false, errors: errors.array() });
+    }
+
+    try {
+      await Offer.create({
+        title: req.body.title,
+        subject: req.body.subject,
+        info: req.body.info,
+        price: req.body.price,
+        duration: req.body.duration,
+      });
+
+      res.json({ ok: true });
+    } catch (err) {
+      console.log(err);
+      res.json({
+        ok: false,
+        errors: [{ msg: "Utworzenie oferty się nie udało!" }],
       });
     }
   }

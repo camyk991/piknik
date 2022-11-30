@@ -1,6 +1,15 @@
 profil użytkownika - zaciąganie danych z bazy
 połączenia między użytkownikami
-rtm:
-    create rtm client
-    connect to the chat - error 10, too many queries
-    send messages
+
+OFERTA:
+//imie
+//zd
+id
+data utworzenia ogłoszenia
+
+tytuł
+przedmiot
+opis
+cena - pkt
+czas trwania
+
