@@ -1,15 +1,20 @@
-profil użytkownika - zaciąganie danych z bazy
-połączenia między użytkownikami
+Dashboard - getting info from database
 
-OFERTA:
-//imie
-//zd
-id
-data utworzenia ogłoszenia
+Calling friends
 
-tytuł
-przedmiot
-opis
-cena - pkt
-czas trwania
+Offerts:
+    error handling
+    feedback message
+    go back btn
+    clean up the form
+    front end
 
+Offering help
+
+Accepting help
+
+Create group chat
+
+Chat:
+    screen sharing
+    controls

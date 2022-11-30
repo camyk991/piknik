@@ -63,7 +63,7 @@ function Profile(props: any) {
                 <a href="#">Pomóż</a>
               </div>
               <div className="header-link">
-                <a href="#">Otrzymaj pomoc</a>
+                <a href="/post-offer">Otrzymaj pomoc</a>
               </div>
               <div className="header-link">
                 <a href="#">Chat grupowy</a>
