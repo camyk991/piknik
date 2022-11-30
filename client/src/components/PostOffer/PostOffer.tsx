@@ -6,7 +6,10 @@ import {
   Loader,
   FormWrapper,
   Heading,
+  SuccessAlert,
 } from "../Login/Login.styles";
+
+import "./PostOffer.css";
 
 import API from "../../API";
 import { Link, useNavigate } from "react-router-dom";
@@ -17,6 +20,8 @@ function PostOffer(props: any) {
   const [info, setInfo] = useState("");
   const [price, setPrice] = useState("");
   const [duration, setDuration] = useState("");
+
+  const [btnState, setBtnState] = useState("");
 
   const navigate = useNavigate();
 
@@ -37,11 +42,13 @@ function PostOffer(props: any) {
     );
 
     if (data.ok) {
-      //feedback later
-      navigate("/dashboard");
+      setBtnState("success");
+
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 5000);
     } else {
-      //handle error later
-      console.log("err");
+      setBtnState("error");
     }
   };
   return (
@@ -105,7 +112,18 @@ function PostOffer(props: any) {
             />
           </p>
           <p>
-            <Submit type="submit">Oferta</Submit>
+            <button
+              className={
+                btnState == "success"
+                  ? "button success animate"
+                  : btnState == "error"
+                  ? "button error animate"
+                  : "button"
+              }
+              type="submit"
+            >
+              Oferta
+            </button>
           </p>
         </Form>
       </FormWrapper>
