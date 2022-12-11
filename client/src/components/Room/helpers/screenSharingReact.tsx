@@ -37,10 +37,10 @@ interface ScreenShareConfig {
   uid: string | number | null;
 }
 
-const appId: string = `${process.env.REACT_APP_AGORA_APP_ID}`; // replace with your app id
+const appId: string = "a3c62a430c5841dea1060444ce7eaf9c";
 const token: string | null = null;
 
-const App = () => {
+const AppTest = () => {
   const [inCall, setInCall] = useState(false);
   const [channelName, setChannelName] = useState("");
   // Screenshare config for the interface created
@@ -135,7 +135,7 @@ const VideoCall = (props: {
   }, [channelName, client, ready, tracks]);
 
   return (
-    <div className="App">
+    <div className="AppTest">
       {ready && tracks && (
         <>
           <Controls tracks={tracks} setStart={setStart} setInCall={setInCall} />
@@ -396,4 +396,4 @@ const ChannelForm = (props: {
   );
 };
 
-export default App;
+export default AppTest;

@@ -127,6 +127,12 @@ function PostOffer(props: any) {
           </p>
         </Form>
       </FormWrapper>
+
+      <div className="return-btn-container">
+        <button id="return-btn">
+          <a href="/dashboard">Powrót</a>
+        </button>
+      </div>
     </div>
   );
 }

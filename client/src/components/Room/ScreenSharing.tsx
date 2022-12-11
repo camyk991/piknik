@@ -3,7 +3,13 @@ import {
   AgoraVideoPlayer,
   createClient,
   createMicrophoneAndCameraTracks,
+  ClientConfig,
+  IAgoraRTCRemoteUser,
+  ILocalVideoTrack,
+  ILocalAudioTrack,
   createScreenVideoTrack,
+  ICameraVideoTrack,
+  IMicrophoneAudioTrack,
 } from "agora-rtc-react";
 
 {
@@ -13,7 +19,7 @@ import {
           /> */
 }
 
-const config = {
+const config: ClientConfig = {
   mode: "rtc",
   codec: "vp8",
 };
@@ -24,14 +30,28 @@ const useScreenVideoClient = createClient({
   codec: "vp8",
 });
 
-const appId = "a3c62a430c5841dea1060444ce7eaf9c";
-const token = null;
+// Screenshare props
+interface Props {
+  screenshareConfig: ScreenShareConfig;
+  onScreenSharingStopped(): void;
+}
+
+// Setting the config for screenshare
+interface ScreenShareConfig {
+  appId: string;
+  channelName: string;
+  token: string | null;
+  uid: string | number | null;
+}
+
+const appId: string = "a3c62a430c5841dea1060444ce7eaf9c";
+const token: string | null = null;
 
 const ScreenSharing = () => {
   const [inCall, setInCall] = useState(false);
   const [channelName, setChannelName] = useState("");
   // Screenshare config for the interface created
-  const screenshareConfig = {
+  const screenshareConfig: ScreenShareConfig = {
     appId,
     channelName,
     token,
@@ -39,7 +59,15 @@ const ScreenSharing = () => {
   };
 };
 
-const getScreenSharingVideoTrack = (tracks) => {
+// the create methods in the wrapper return a hook
+// the create method should be called outside the parent component
+// this hook can be used the get the client/stream in any component
+const useClient = createClient(config);
+const useMicrophoneAndCameraTracks = createMicrophoneAndCameraTracks();
+
+const getScreenSharingVideoTrack = (
+  tracks: ILocalVideoTrack | [ILocalVideoTrack, ILocalAudioTrack]
+) => {
   if (Array.isArray(tracks)) {
     return tracks[0];
   } else {
@@ -48,7 +76,7 @@ const getScreenSharingVideoTrack = (tracks) => {
 };
 
 // ScreenSharing component
-const Share = (props) => {
+const Share = (props: Props) => {
   const useScreenVideoTrack = createScreenVideoTrack({
     encoderConfig: "1080p_1",
     optimizationMode: "detail",
@@ -57,7 +85,7 @@ const Share = (props) => {
   const screenVideoClient = useScreenVideoClient();
   const { ready, tracks } = useScreenVideoTrack();
   const tracksRef = useRef(tracks);
-  const [toggleState, setToggleState] = useState(false);
+  const [toggleState, setToggleState] = useState<boolean>(false);
 
   const { onScreenSharingStopped } = props;
 
@@ -66,7 +94,7 @@ const Share = (props) => {
   }, [tracks]);
 
   useEffect(() => {
-    const init = async (channelName) => {
+    const init = async (channelName: string) => {
       if (!props.screenshareConfig) return;
 
       try {

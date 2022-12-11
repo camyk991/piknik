@@ -3,20 +3,14 @@ import {
   AgoraVideoPlayer,
   createClient,
   createMicrophoneAndCameraTracks,
+  ClientConfig,
+  IAgoraRTCRemoteUser,
+  ILocalVideoTrack,
+  ILocalAudioTrack,
   createScreenVideoTrack,
+  ICameraVideoTrack,
+  IMicrophoneAudioTrack,
 } from "agora-rtc-react";
-
-{
-  /* <ScreenSharing
-            screenshareConfig={screenshareConfig}
-            onScreenSharingStopped={() => console.log("Screensharing stopped.")}
-          /> */
-}
-
-const config = {
-  mode: "rtc",
-  codec: "vp8",
-};
 
 // Create screen client
 const useScreenVideoClient = createClient({
@@ -24,22 +18,9 @@ const useScreenVideoClient = createClient({
   codec: "vp8",
 });
 
-const appId = "a3c62a430c5841dea1060444ce7eaf9c";
-const token = null;
-
-const ScreenSharing = () => {
-  const [inCall, setInCall] = useState(false);
-  const [channelName, setChannelName] = useState("");
-  // Screenshare config for the interface created
-  const screenshareConfig = {
-    appId,
-    channelName,
-    token,
-    uid: null,
-  };
-};
-
-const getScreenSharingVideoTrack = (tracks) => {
+const getScreenSharingVideoTrack = (
+  tracks: ILocalVideoTrack | [ILocalVideoTrack, ILocalAudioTrack]
+) => {
   if (Array.isArray(tracks)) {
     return tracks[0];
   } else {
@@ -47,8 +28,9 @@ const getScreenSharingVideoTrack = (tracks) => {
   }
 };
 
+//todo
 // ScreenSharing component
-const Share = (props) => {
+const ScreenSharing = (props: any) => {
   const useScreenVideoTrack = createScreenVideoTrack({
     encoderConfig: "1080p_1",
     optimizationMode: "detail",
@@ -57,7 +39,7 @@ const Share = (props) => {
   const screenVideoClient = useScreenVideoClient();
   const { ready, tracks } = useScreenVideoTrack();
   const tracksRef = useRef(tracks);
-  const [toggleState, setToggleState] = useState(false);
+  const [toggleState, setToggleState] = useState<boolean>(false);
 
   const { onScreenSharingStopped } = props;
 
@@ -66,7 +48,7 @@ const Share = (props) => {
   }, [tracks]);
 
   useEffect(() => {
-    const init = async (channelName) => {
+    const init = async (channelName: string) => {
       if (!props.screenshareConfig) return;
 
       try {
@@ -176,5 +158,3 @@ const Share = (props) => {
     </>
   );
 };
-
-export default ScreenSharing;

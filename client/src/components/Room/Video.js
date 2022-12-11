@@ -2,6 +2,8 @@ import { AgoraVideoPlayer } from "agora-rtc-react";
 import { useState, useEffect } from "react";
 import Controls from "./Controls";
 
+import ScreenShare from "./ScreenShare";
+
 export default function Video(props) {
   //users - remote users (others)
   //tracks - local tracks (us)
@@ -112,6 +114,13 @@ export default function Video(props) {
             } else return null;
           })}
       </div>
+
+      {/* <ScreenShare
+        tracks={tracks}
+        setStart={setStart}
+        setInCall={setInCall}
+        users={users}
+      /> */}
 
       <Controls
         tracks={tracks}

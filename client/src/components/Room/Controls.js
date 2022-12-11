@@ -1,44 +1,46 @@
-import { useState } from "react";
-import { useClient } from "./settings";
+import { useEffect, useState, useRef } from "react";
+import { useClient, getScreenVideoTrack } from "./settings";
 import styled from "styled-components";
-import { createScreenVideoTrack } from "agora-rtc-react";
+import {
+  createScreenVideoTrack,
+  createClient,
+  AgoraVideoPlayer,
+} from "agora-rtc-react";
+// import { initScreenSharing } from "./ScreenShare";
+
+import ScreenShare from "./ScreenShare";
 
 export default function Controls(props) {
   const client = useClient();
-  const { tracks, setStart, setInCall, users } = props;
+  const { tracks: videoTrack, setStart, setInCall, users } = props;
   const [trackState, setTrackState] = useState({ video: true, audio: true });
+
   const [isScreenSharing, setIsScreenSharing] = useState(false);
 
+  //MUTING AND OTHER STUFF
   //works only for us not for others
   const mute = async (type) => {
     if (type === "audio") {
-      await tracks[0].setEnabled(!trackState.audio);
+      await videoTrack[0].setEnabled(!trackState.audio);
       setTrackState((ps) => {
         return { ...ps, audio: !ps.audio };
       });
     } else if (type === "video") {
-      await tracks[1].setEnabled(!trackState.video);
+      await videoTrack[1].setEnabled(!trackState.video);
       setTrackState((ps) => {
         return { ...ps, video: !ps.video };
       });
     }
   };
 
-  const screenShare = async () => {
-    //ask for a screen
-    setIsScreenSharing(true);
-    // const screenVideoTracks = await createScreenVideoTrack();
-    // console.log(screenVideoTracks);
-  };
-
   const leaveChannel = async () => {
     await client.leave();
     client.removeAllListeners();
-    tracks[0].close();
-    tracks[1].close();
+    videoTrack[0].close();
+    videoTrack[1].close();
     setStart(false);
     setInCall(false);
-    window.location.href = "lobby.html";
+    window.location.href = "/dashboard";
   };
 
   const StreamActions = styled.div`
@@ -131,10 +133,9 @@ export default function Controls(props) {
         <div>
           {/* share screen */}
           <ActionBtn
-            style={{
-              backgroundColor: trackState.video ? "#845695" : "#262625",
+            onClick={() => {
+              setIsScreenSharing(true);
             }}
-            onClick={() => screenShare()}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -145,6 +146,7 @@ export default function Controls(props) {
             >
               <path d="M0 1v17h24v-17h-24zm22 15h-20v-13h20v13zm-6.599 4l2.599 3h-12l2.599-3h6.802z" />
             </svg>
+            <ScreenShare isScreenSharing={isScreenSharing} />
           </ActionBtn>
         </div>
         <div>
@@ -164,5 +166,3 @@ export default function Controls(props) {
     </div>
   );
 }
-
-// add screen sharing later
