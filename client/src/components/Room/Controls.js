@@ -13,20 +13,18 @@ import ScreenShare from "./ScreenShare";
 export default function Controls(props) {
   const client = useClient();
   const { tracks: videoTrack, setStart, setInCall, users } = props;
-  const [trackState, setTrackState] = useState({ video: true, audio: true });
+  const [trackState, setTrackState] = useState({ video: false, audio: false });
 
   const [isScreenSharing, setIsScreenSharing] = useState(false);
 
-  //MUTING AND OTHER STUFF
-  //works only for us not for others
   const mute = async (type) => {
     if (type === "audio") {
-      await videoTrack[0].setEnabled(!trackState.audio);
+      await videoTrack[0].setMuted(!trackState.audio);
       setTrackState((ps) => {
         return { ...ps, audio: !ps.audio };
       });
     } else if (type === "video") {
-      await videoTrack[1].setEnabled(!trackState.video);
+      await videoTrack[1].setMuted(!trackState.video);
       setTrackState((ps) => {
         return { ...ps, video: !ps.video };
       });
@@ -97,7 +95,7 @@ export default function Controls(props) {
         <div>
           <ActionBtn
             style={{
-              backgroundColor: trackState.audio ? "#845695" : "#262625",
+              backgroundColor: trackState.audio ? "#262625" : "#845695",
             }}
             onClick={() => mute("audio")}
           >
@@ -115,7 +113,7 @@ export default function Controls(props) {
         <div>
           <ActionBtn
             style={{
-              backgroundColor: trackState.video ? "#845695" : "#262625",
+              backgroundColor: trackState.video ? "#262625" : "#845695",
             }}
             onClick={() => mute("video")}
           >
@@ -146,7 +144,11 @@ export default function Controls(props) {
             >
               <path d="M0 1v17h24v-17h-24zm22 15h-20v-13h20v13zm-6.599 4l2.599 3h-12l2.599-3h6.802z" />
             </svg>
-            <ScreenShare isScreenSharing={isScreenSharing} />
+            <ScreenShare
+              isScreenSharing={isScreenSharing}
+              tracks={videoTrack}
+              users={users}
+            />
           </ActionBtn>
         </div>
         <div>

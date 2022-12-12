@@ -1,11 +1,9 @@
-import logo from "./logo.png"; //change later
+import logo from "./logo.png";
 import "./Room.css";
 import Video from "./Video";
 import Messages from "./Messages";
 
-import { useEffect, useState } from "react";
-
-import { v4 as uuidv4 } from "uuid";
+import { useState } from "react";
 
 function Room(props) {
   const {
@@ -172,10 +170,9 @@ function Room(props) {
             testChannel={testChannel}
             uid={client.uid}
           />
-          {/* <section
-            id="messages__container"
-            className={chatPanel ? "messages__container__hidden" : null}
-          >
+
+          {/* bot messages? */}
+          {/* 
             <div id="messages">
               <div className="message__wrapper">
               <div className="message__body__bot">
@@ -184,26 +181,7 @@ function Room(props) {
                   Welcome to the room, Don't be shy, say hello!
                 </p>
               </div>
-            </div> 
-
-             <div className="message__wrapper">
-              <div className="message__body">
-                <strong className="message__author">Dennis Ivy</strong>
-                <p className="message__text">
-                  Does anyone know when he will be back?
-                </p>
-              </div>
-            </div> 
-            </div>
-
-            <form id="message__form">
-              <input
-                type="text"
-                name="message"
-                placeholder="Send a message...."
-              />
-            </form>
-          </section> */}
+            </div> */}
         </div>
       </main>
     </div>

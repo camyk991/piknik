@@ -1,13 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import {
-  config,
-  useClient,
-  useMicrophoneAndCameraTracks,
-  // useRtmClient,
-} from "./settings.js";
+import { config, useClient, useMicrophoneAndCameraTracks } from "./settings.js";
 import Room from "./Room.js";
 
-// import { createChannel, RtmChannel } from "agora-rtm-react";
 import { createClient, createChannel } from "agora-rtm-react";
 
 export const useRtmClient = createClient("a3c62a430c5841dea1060444ce7eaf9c");
@@ -43,8 +37,6 @@ export default function VideoCall(props) {
         setRoomId(lastSegment);
       }
 
-      console.log(`%c ${lastSegment} `, "background: #222; color: #bada55");
-
       //publish video and audio
       client.on("user-published", async (user, mediaType) => {
         await client.subscribe(user, mediaType);
@@ -54,10 +46,13 @@ export default function VideoCall(props) {
             return [...new Set([...prevUsers, user])];
           });
 
+          user.videoTrack.play();
+
           // setMemberName((prevName) => {
           //   return [...prevName];
           // });
         }
+
         if (mediaType === "audio") {
           user.audioTrack.play();
         }
@@ -69,9 +64,18 @@ export default function VideoCall(props) {
           if (user.audioTrack) user.audioTrack.stop();
         }
         if (mediaType === "video") {
-          setUsers((prevUsers) => {
-            return prevUsers.filter((User) => User.uid !== user.uid);
-          });
+          if (user.videoTrack) user.videoTrack.stop();
+          //MUTING AND OTHER STUFF
+          //since setMuted basically calles user-unpublish this will handle the muting
+          //so right now the circle doesn't disappear, which is good, only the icon shows up
+          //but now it doesn't appear back until you do sth with it
+          //dunno a problem with refreshing or sth?
+
+          //when I click on it while it's muted it crashes for sm reason
+
+          // setUsers((prevUsers) => {
+          //   return prevUsers.filter((User) => User.uid !== user.uid);
+          // });
         }
       });
 
@@ -110,7 +114,7 @@ export default function VideoCall(props) {
     //create room
     if (ready && tracks) {
       try {
-        init(lastSegment ? lastSegment : "main");
+        init(lastSegment ? lastSegment : "default");
         rtmInit();
       } catch (error) {
         console.log(error);

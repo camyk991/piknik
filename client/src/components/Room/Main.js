@@ -1,6 +1,5 @@
 import { useState } from "react";
 import VideoCall from "./VideoCall";
-// import Lobby from "./Lobby";
 import logo from "./logo.png";
 import "./Lobby.css";
 

@@ -6,11 +6,11 @@ import {
   createClient,
   AgoraVideoPlayer,
 } from "agora-rtc-react";
-// import { initScreenSharing } from "./ScreenShare";
 
 export default function ScreenShare(props) {
   let screenTracks;
   const client = useClient();
+  const { tracks: videoTrack, users } = props;
 
   const { isScreenSharing } = props;
 
@@ -37,7 +37,17 @@ export default function ScreenShare(props) {
 
   const screenTrack = getScreenSharingVideoTrack(screenTracks);
 
-  if (screenTracks) client.publish(screenTrack);
+  if (screenTracks) {
+    //works but also doesn't refreshes and it only updates for other, we still see our camera instead of screen
+    client.unpublish([videoTrack[1]]);
+    client.publish(screenTrack);
+
+    //1-video, 0-audio
+    // videoTrack[1] = screenTrack;
+  }
+
+  console.log(`%c ${screenTrack} `, "background: #222; color: #bada55");
+  console.log(`%c ${videoTrack[1]} `, "background: #222; color: #bada55");
 
   return <div className="ScreenShare" style={{ display: "none" }}></div>;
 }

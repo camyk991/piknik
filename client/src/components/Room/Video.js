@@ -7,6 +7,7 @@ import ScreenShare from "./ScreenShare";
 export default function Video(props) {
   //users - remote users (others)
   //tracks - local tracks (us)
+
   const { users, tracks } = props;
   const [start, setStart] = useState(false);
   const [inCall, setInCall] = useState(false);
