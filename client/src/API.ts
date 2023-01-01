@@ -58,7 +58,7 @@ export default {
       body: JSON.stringify({
         title: title,
         subject: subject,
-        info: info,
+        info: info || "none",
         price: price,
         duration: duration,
       }),

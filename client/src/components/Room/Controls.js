@@ -6,7 +6,6 @@ import {
   createClient,
   AgoraVideoPlayer,
 } from "agora-rtc-react";
-// import { initScreenSharing } from "./ScreenShare";
 
 import ScreenShare from "./ScreenShare";
 
@@ -16,6 +15,7 @@ export default function Controls(props) {
   const [trackState, setTrackState] = useState({ video: false, audio: false });
 
   const [isScreenSharing, setIsScreenSharing] = useState(false);
+  const [ifScreenShared, setIfScreenShared] = useState(false);
 
   const mute = async (type) => {
     if (type === "audio") {
@@ -132,7 +132,11 @@ export default function Controls(props) {
           {/* share screen */}
           <ActionBtn
             onClick={() => {
-              setIsScreenSharing(true);
+              setIsScreenSharing(!isScreenSharing);
+              setIfScreenShared(true);
+            }}
+            style={{
+              backgroundColor: isScreenSharing ? "#845695" : "#262625",
             }}
           >
             <svg
@@ -148,6 +152,7 @@ export default function Controls(props) {
               isScreenSharing={isScreenSharing}
               tracks={videoTrack}
               users={users}
+              ifScreenShared={ifScreenShared}
             />
           </ActionBtn>
         </div>

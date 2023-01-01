@@ -7,16 +7,11 @@ import Main from "./components/Room/Main";
 import { GlobalStyle } from "./GlobalStyles";
 import { useIsLoggedIn } from "./hooks/useIsLoggedIn";
 import VideoCall from "./components/Room/VideoCall";
-import { useIsInRoom } from "./hooks/useIsInRoom";
-import { v4 as uuidv4 } from "uuid";
 import PostOffer from "./components/PostOffer/PostOffer";
 
 function App() {
   const { loggedIn, setLoggedIn, userData, setUserData } = useIsLoggedIn();
-  // const { inCall, setInCall, roomId, setRoomId } = useIsInRoom();
-
   const [inCall, setInCall] = useState(true);
-  // const [roomId, setRoomId] = useState(uuidv4());
   const [roomId, setRoomId] = useState("1");
 
   return (

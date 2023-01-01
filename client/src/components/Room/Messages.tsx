@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 
 import { RtmMessage } from "agora-rtm-react";
-import { text } from "stream/consumers";
+// import { text } from "stream/consumers";
 
 function Messages(props: any) {
   const {
@@ -92,24 +92,6 @@ function Messages(props: any) {
               </div>
             </div>
           ))}
-
-          {/* <div className="message__wrapper">
-              <div className="message__body__bot">
-                <strong className="message__author__bot">🤖 Mumble Bot</strong>
-                <p className="message__text__bot">
-                  Welcome to the room, Don't be shy, say hello!
-                </p>
-              </div>
-            </div> */}
-
-          {/* <div className="message__wrapper">
-              <div className="message__body">
-                <strong className="message__author">Dennis Ivy</strong>
-                <p className="message__text">
-                  Does anyone know when he will be back?
-                </p>
-              </div>
-            </div> */}
         </div>
 
         <form
@@ -131,30 +113,16 @@ function Messages(props: any) {
   );
 }
 
+// if doesn't work
+// remember
+// you changed the RtmMessage type
+// type RtmMessage =
+//   | RtmTextMessage
+//   | RtmRawMessage;
+
 export type messageStore = {
   msg: RtmMessage;
   uid: string;
 };
 
 export default Messages;
-
-// Future<AgoraRtmChannel?> _createChannel(String name) async {
-//   AgoraRtmChannel? channel = await _client?.createChannel(name);
-//   if (channel != null) {
-//     channel.onMemberJoined = (AgoraRtmMember member) {
-//       _log("Member joined: " +
-//           member.userId +
-//           ', channel: ' +
-//           member.channelId);
-//     };
-//     channel.onMemberLeft = (AgoraRtmMember member) {
-//       _log(
-//           "Member left: " + member.userId + ', channel: ' + member.channelId);
-//     };
-//     channel.onMessageReceived =
-//         (AgoraRtmMessage message, AgoraRtmMember member) {
-//       _log("Channel msg: " + member.userId + ", msg: " + message.text);
-//     };
-//   }
-//   return channel;
-// }

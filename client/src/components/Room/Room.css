@@ -204,7 +204,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid #b366f9;
+  border: 2px solid rgb(42, 202, 62);
   border-radius: 50%;
   cursor: pointer;
   overflow: hidden;

@@ -1,8 +1,6 @@
 import { AgoraVideoPlayer } from "agora-rtc-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Controls from "./Controls";
-
-import ScreenShare from "./ScreenShare";
 
 export default function Video(props) {
   //users - remote users (others)
@@ -49,17 +47,23 @@ export default function Video(props) {
       >
         {videoFrame ? (
           <div className="video__container" id={userIdInDisplayFrame}>
-            <div className="video-player" id={"user-" + userIdInDisplayFrame}>
-              <AgoraVideoPlayer
-                videoTrack={
-                  userIdInDisplayFrame == 1
-                    ? tracks[1]
-                    : users.find((user) => user.uid == userIdInDisplayFrame)
-                        .videoTrack
-                }
-                style={{ height: "100%", width: "100%" }}
-              />
-            </div>
+            {userIdInDisplayFrame == 1 ||
+            users.find((user) => user.uid == userIdInDisplayFrame)
+              .videoTrack ? (
+              <div className="video-player" id={"user-" + userIdInDisplayFrame}>
+                <AgoraVideoPlayer
+                  videoTrack={
+                    userIdInDisplayFrame == 1
+                      ? tracks[1]
+                      : users.find((user) => user.uid == userIdInDisplayFrame)
+                          .videoTrack || ""
+                  }
+                  style={{ height: "100%", width: "100%" }}
+                />
+              </div>
+            ) : (
+              <div></div>
+            )}
           </div>
         ) : null}
       </div>
@@ -73,12 +77,18 @@ export default function Video(props) {
           }
           id="1"
           onClick={expandVideoFrame}
+          style={{
+            border: "2px solid #b366f9",
+          }}
         >
           <div className="video-player" id="user-1">
             {!videoFrame || userIdInDisplayFrame != 1 ? (
               <AgoraVideoPlayer
                 videoTrack={tracks[1]}
-                style={{ height: "100%", width: "100%" }}
+                style={{
+                  height: "100%",
+                  width: "100%",
+                }}
               />
             ) : (
               <div></div>
@@ -88,19 +98,19 @@ export default function Video(props) {
 
         {users.length > 0 &&
           users.map((user) => {
-            if (user.videoTrack) {
-              return (
-                <div
-                  className={
-                    userIdInDisplayFrame
-                      ? "video__container small__video__containers"
-                      : "video__container"
-                  }
-                  id={user.uid}
-                  onClick={expandVideoFrame}
-                >
-                  <div className="video-player" id={"user-" + user.uid}>
-                    {!videoFrame || userIdInDisplayFrame != user.uid ? (
+            return (
+              <div
+                className={
+                  userIdInDisplayFrame
+                    ? "video__container small__video__containers"
+                    : "video__container"
+                }
+                id={user.uid}
+                onClick={expandVideoFrame}
+              >
+                <div className="video-player" id={"user-" + user.uid}>
+                  {!videoFrame || userIdInDisplayFrame != user.uid ? (
+                    user.videoTrack ? (
                       <AgoraVideoPlayer
                         videoTrack={user.videoTrack}
                         key={user.uid}
@@ -108,11 +118,13 @@ export default function Video(props) {
                       />
                     ) : (
                       <div></div>
-                    )}
-                  </div>
+                    )
+                  ) : (
+                    <div></div>
+                  )}
                 </div>
-              );
-            } else return null;
+              </div>
+            );
           })}
       </div>
 

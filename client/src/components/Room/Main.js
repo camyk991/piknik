@@ -30,7 +30,7 @@ function Main() {
               <a href="lobby.html">
                 <h3 id="logo">
                   <img src={logo} alt="logo" />
-                  <span>Mumble</span>
+                  <span>TutorMe</span>
                 </h3>
               </a>
             </div>

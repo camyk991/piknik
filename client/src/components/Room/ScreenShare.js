@@ -1,20 +1,13 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useClient, getScreenVideoTrack } from "./settings";
-import styled from "styled-components";
-import {
-  createScreenVideoTrack,
-  createClient,
-  AgoraVideoPlayer,
-} from "agora-rtc-react";
 
 export default function ScreenShare(props) {
   let screenTracks;
   const client = useClient();
   const { tracks: videoTrack, users } = props;
 
-  const { isScreenSharing } = props;
+  const { isScreenSharing, ifScreenShared } = props;
 
-  //SCREEN SHARING AND SHIT
   const getScreenSharingVideoTrack = (tracks) => {
     if (Array.isArray(tracks)) {
       return tracks[0];
@@ -43,11 +36,15 @@ export default function ScreenShare(props) {
     client.publish(screenTrack);
 
     //1-video, 0-audio
-    // videoTrack[1] = screenTrack;
+    videoTrack[1] = screenTrack; //now we can see our screen as well
   }
 
-  console.log(`%c ${screenTrack} `, "background: #222; color: #bada55");
-  console.log(`%c ${videoTrack[1]} `, "background: #222; color: #bada55");
+  if (ifScreenShared) {
+    if (!isScreenSharing) {
+      client.unpublish(screenTrack);
+      client.publish([videoTrack[1]]);
+    }
+  }
 
   return <div className="ScreenShare" style={{ display: "none" }}></div>;
 }

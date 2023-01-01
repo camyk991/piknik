@@ -2,13 +2,6 @@ Dashboard - getting info from database
 
 Calling friends
 
-Offerts:
-error handling
-feedback message
-go back btn
-clean up the form
-front end
-
 Offering help
 
 Accepting help
@@ -16,5 +9,8 @@ Accepting help
 Create group chat
 
 Chat:
-screen sharing
+screen sharing - switching back
 controls
+refreshing the circles after a change
+
+Styles - motives, dark and light

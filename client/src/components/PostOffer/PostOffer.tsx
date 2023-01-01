@@ -1,18 +1,10 @@
-import React, { useEffect, useState } from "react";
-import {
-  Form,
-  Input,
-  Submit,
-  Loader,
-  FormWrapper,
-  Heading,
-  SuccessAlert,
-} from "../Login/Login.styles";
+import React, { useState } from "react";
+import { Form, Input, FormWrapper, Heading } from "../Login/Login.styles";
 
 import "./PostOffer.css";
 
 import API from "../../API";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function PostOffer(props: any) {
   const [title, setTitle] = useState("");
